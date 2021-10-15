@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Card.h"
+#pragma execution_character_set("utf-8")
 
 //конструктор -----  ввод данных о карточке из файлика
 Card::Card() {
