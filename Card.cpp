@@ -2,7 +2,7 @@
 #include "Card.h"
 #pragma execution_character_set("utf-8")
 
-//конструктор -----  ввод данных о карточке из файлика
+//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ -----  РІРІРѕРґ РґР°РЅРЅС‹С… Рѕ РєР°СЂС‚РѕС‡РєРµ РёР· С„Р°Р№Р»РёРєР°
 Card::Card() {
 
 	card_number = "no";
@@ -25,7 +25,7 @@ Card::Card() {
 	from_card.close();
 }
 
-//геттеры и сеттеры
+//РіРµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
 string Card::GetCardNumber() {
 	return card_number;
 }
@@ -58,7 +58,7 @@ void Card::SetCardData(string data) {
 	this->card_data = data;
 }
 
-// копирование данных о карточке
+// РєРѕРїРёСЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С… Рѕ РєР°СЂС‚РѕС‡РєРµ
 void Card::CopyData() {
 	ifstream from_card("card.txt");
 	ofstream new_card("newcard.txt");
