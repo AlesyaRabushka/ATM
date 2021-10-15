@@ -13,7 +13,7 @@ void CardSessions::SetMoneyCurrency(string money) {
 
 int CardSessions::GetMoneyAmount() {
 	return this->money_amount;
-} 
+}
 string CardSessions::GetMoneyCurrency() {
 	return this->money_currency;
 }
