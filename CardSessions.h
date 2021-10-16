@@ -4,7 +4,7 @@
 #include "Card.h"
 
 //  SESSIONS CLASS
-class CardSessions: public Bank {
+class CardSessions : public Bank, public Card {
 private:
 	int money_amount;
 	string money_currency;
@@ -19,16 +19,32 @@ public:
 	//смена пин-кода на карточке
 	static void ChangeCardPin(Card&, int);//нестатическая ссылка на член должна указываться относительно заданного объекта, а мы его не создаём)
 	static void ShowBalance(Card&);
+
+	//для вывода с паузой
+	static void PauseF();
+	static void CopyAccount();
 };
 
-// выдача наличных
+
+// GIVE MONEY CLASS (TO CARD)
 class GiveMoney : public CardSessions {
 public:
-	static void MoneyOut();
+	static void MoneyOut(Card&);
 };
 
-// принятие деняк
+
+// GET MONEY CLASS (FROM CARD)
 class GetMoney : public CardSessions {
 public:
-	static void MoneyIn(Card&, int);
+	static void MoneyIn(Card&);
+};
+
+// PAYEMENT (GROM CARD)
+class Payement : public GetMoney {
+	static void Pay(Card&);
+};
+
+//EXCHANGE CURRENCY CLASS
+class Exchange : public Bank, public CardSessions {
+
 };
