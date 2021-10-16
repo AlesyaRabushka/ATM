@@ -199,6 +199,7 @@ void CardSessions::ShowBalance(Card& card) {
 //	new_account.close();
 //}
 
+// пока не сделала!!!!!!
 // оплата с карточки за услуги
 void Payement::Pay(Card& card) {
 	int money;
