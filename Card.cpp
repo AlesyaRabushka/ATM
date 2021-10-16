@@ -24,7 +24,7 @@ Card::Card() {
 	from_card.close();
 }
 
-//ăĺňňĺđű č ńĺňňĺđű
+//геттеры и сеттеры
 string Card::GetCardNumber() {
 	return card_number;
 }
@@ -57,7 +57,7 @@ void Card::SetCardData(string data) {
 	this->card_data = data;
 }
 
-// ęîďčđîâŕíčĺ äŕííűő î ęŕđňî÷ęĺ
+// копирование данных о карточке
 void Card::CopyData() {
 	ifstream from_card("card.txt");
 	ofstream new_card("newcard.txt");
