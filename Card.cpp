@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Card.h"
 
-//конструктор -----  ввод данных о карточке из файлика
+//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ -----  РІРІРѕРґ РґР°РЅРЅС‹С… Рѕ РєР°СЂС‚РѕС‡РєРµ РёР· С„Р°Р№Р»РёРєР°
 Card::Card() {
 
 	card_number = "no";
@@ -24,7 +24,7 @@ Card::Card() {
 	from_card.close();
 }
 
-//геттеры и сеттеры
+//ДѓДєЕ€Е€ДєД‘Е± ДЌ Е„ДєЕ€Е€ДєД‘Е±
 string Card::GetCardNumber() {
 	return card_number;
 }
@@ -57,7 +57,7 @@ void Card::SetCardData(string data) {
 	this->card_data = data;
 }
 
-// копирование данных о карточке
+// Д™Г®ДЏДЌД‘Г®ГўЕ•Г­ДЌДє Г¤Е•Г­Г­Е±Е‘ Г® Д™Е•Д‘Е€Г®Г·Д™Дє
 void Card::CopyData() {
 	ifstream from_card("card.txt");
 	ofstream new_card("newcard.txt");
