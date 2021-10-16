@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Card.h"
 
-//ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ -----  Ð²Ð²Ð¾Ð´ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐµ Ð¸Ð· Ñ„Ð°Ð¹Ð»Ð¸ÐºÐ°
+//êîíñòðóêòîð -----  ââîä äàííûõ î êàðòî÷êå èç ôàéëèêà
 Card::Card() {
 
 	card_number = "no";
@@ -19,12 +19,12 @@ Card::Card() {
 		from_card >> card_cvv;
 		getline(from_card, empty);
 		from_card >> card_balance;
-		
+
 	}
 	from_card.close();
 }
 
-//Ð³ÐµÑ‚Ñ‚ÐµÑ€Ñ‹ Ð¸ ÑÐµÑ‚Ñ‚ÐµÑ€Ñ‹
+//ãåòòåðû è ñåòòåðû
 string Card::GetCardNumber() {
 	return card_number;
 }
@@ -57,7 +57,7 @@ void Card::SetCardData(string data) {
 	this->card_data = data;
 }
 
-// ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐµ
+// êîïèðîâàíèå äàííûõ î êàðòî÷êå
 void Card::CopyData() {
 	ifstream from_card("card.txt");
 	ofstream new_card("newcard.txt");
@@ -67,7 +67,7 @@ void Card::CopyData() {
 			getline(from_card, card_number);
 			getline(from_card, card_data);
 			getline(from_card, card_holder);
-			
+
 			from_card >> card_pin;
 			getline(from_card, empty);
 			from_card >> card_cvv;
@@ -77,7 +77,7 @@ void Card::CopyData() {
 			new_card << card_number << endl;
 			new_card << card_data << endl;
 			new_card << card_holder << endl;
-			
+
 			new_card << card_balance << endl;
 			new_card << card_pin << endl;
 			new_card << card_cvv << endl;

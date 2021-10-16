@@ -1,7 +1,8 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Card.h"
-#include "MainOperations.h"
+#include "MenuOperations.h"
 #include "CardSessions.h"
+#include "Bank.h"
 
 
 using namespace std;
@@ -26,9 +27,17 @@ int main() {
 			break;
 		}
 		case 5: {
-			GetMoney::MoneyIn(card, card.GetCardBalance());
+			GetMoney::MoneyIn(card);
+			break;
 		}
-
+		case 2: {
+			GiveMoney::MoneyOut(card);
+			break;
+		}
+		case 6: {
+			Payement::Pay(card);
+			break;
+		}
 
 		}
 

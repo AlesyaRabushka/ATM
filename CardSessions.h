@@ -16,11 +16,11 @@ public:
 	int GetMoneyAmount();
 	string GetMoneyCurrency();
 
-	//СЃРјРµРЅР° РїРёРЅ-РєРѕРґР° РЅР° РєР°СЂС‚РѕС‡РєРµ
-	static void ChangeCardPin(Card&, int);//РЅРµСЃС‚Р°С‚РёС‡РµСЃРєР°СЏ СЃСЃС‹Р»РєР° РЅР° С‡Р»РµРЅ РґРѕР»Р¶РЅР° СѓРєР°Р·С‹РІР°С‚СЊСЃСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ Р·Р°РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, Р° РјС‹ РµРіРѕ РЅРµ СЃРѕР·РґР°С‘Рј)
+	//смена пин-кода на карточке
+	static void ChangeCardPin(Card&, int);//нестатическая ссылка на член должна указываться относительно заданного объекта, а мы его не создаём)
 	static void ShowBalance(Card&);
 
-	//РґР»СЏ РІС‹РІРѕРґР° СЃ РїР°СѓР·РѕР№
+	//для вывода с паузой
 	static void PauseF();
 	static void CopyAccount();
 };
@@ -41,6 +41,7 @@ public:
 
 // PAYEMENT (GROM CARD)
 class Payement : public GetMoney {
+public:
 	static void Pay(Card&);
 };
 
