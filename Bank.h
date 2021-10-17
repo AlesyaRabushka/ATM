@@ -8,20 +8,19 @@ using namespace std;
 class Bank
 {
 private:
-	string Bank_number;
-	string Bank_holder;
+	string bank_number;
+	string bank_holder;
 	int bank_balance = 0;
 
 public:
 	Bank();
 	void SetBankNumber(string);
 	void SetBankHolder(string);
-	void SetAccBalance(int);
+	void SetBankBalance(int);
 
-	string GetAccNumber();
-	string GetAccHolder();
-	int GetAccBalance();
-	
-	//информация о счете
+	string GetBankNumber();
+	string GetBankHolder();
+	int GetBankBalance();
+
 	void Print();
 };
