@@ -10,12 +10,11 @@ Bank::Bank() {
 	Bank_holder = "no";
 	bank_balance = 0;
 
-	ifstream from_acc("acc.txt");
+	ifstream from_acc("ac.txt");
 	if (from_acc) {
 		getline(from_acc, Bank_number);
 		getline(from_acc, Bank_holder);
 		from_acc >> bank_balance;
-
 	}
 	from_acc.close();
 }
@@ -38,4 +37,9 @@ string Bank::GetAccHolder() {
 }
 int Bank::GetAccBalance() {
 	return bank_balance;
+}
+
+void Bank::Print() {
+	cout << "\tНомер счёта: " << Bank::GetAccNumber() << endl;
+	cout << "\tДосупные средства: " << Bank::GetAccBalance() << endl << endl;
 }
