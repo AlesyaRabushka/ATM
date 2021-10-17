@@ -24,7 +24,7 @@ Bank::Bank() {
 }
 
 void Bank::Print() {
-	cout << "\tÍîìåð ñ÷åòà: " << GetNumber() << endl;
-	cout << "\tÂëàäåëåö ñ÷åòà: " << GetHolder() << endl;
+	cout << "\tÐÐ¾Ð¼ÐµÑ€ ÑÑ‡ÐµÑ‚Ð°: " << GetNumber() << endl;
+	cout << "\tÐ’Ð»Ð°Ð´ÐµÐ»ÐµÑ† ÑÑ‡ÐµÑ‚Ð°: " << GetHolder() << endl;
 	Bankomat::Print();
 }
