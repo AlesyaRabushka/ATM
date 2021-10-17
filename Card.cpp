@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Card.h"
 
-//конструктор -----  ввод данных о карточке из файлика
+//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ -----  РІРІРѕРґ РґР°РЅРЅС‹С… Рѕ РєР°СЂС‚РѕС‡РєРµ РёР· С„Р°Р№Р»РёРєР°
 Card::Card() {
 
 	string card_number = "no";
@@ -32,10 +32,10 @@ Card::Card() {
 	from_card.close();
 }
 
-// вывод данных о карточке
+// РІС‹РІРѕРґ РґР°РЅРЅС‹С… Рѕ РєР°СЂС‚РѕС‡РєРµ
 void Card::Print() {
-	cout << "\tНомер карточки: " << GetNumber() << endl;
-	cout << "\tВладелец карточки: " << GetHolder() << endl;
-	cout << "\tСрок эксплутации: " << GetCardData() << endl;
+	cout << "\tГЌГ®Д›ДєД‘ Д™Е•Д‘Е€Г®Г·Д™ДЌ: " << GetNumber() << endl;
+	cout << "\tГ‚Г«Е•Г¤ДєГ«ДєГ¶ Д™Е•Д‘Е€Г®Г·Д™ДЌ: " << GetHolder() << endl;
+	cout << "\tЕѓД‘Г®Д™ ГЅД™Е„ДЏГ«ГіЕ€Е•Г¶ДЌДЌ: " << GetCardData() << endl;
 	Bankomat::Print();
 }
