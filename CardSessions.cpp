@@ -242,13 +242,12 @@ void Payement::Pay(Card& card, Bank& bank) {
 								string acc_number, acc_holder;
 								int acc_bal;
 								getline(read, acc_number);
-								cout << acc_number << endl;
 								record << acc_number << endl;
 								getline(read, acc_holder);
 								record << acc_holder << endl;
 								read >> acc_bal;
 								record << acc_bal + money << endl;
-								bank.SetAccBalance(acc_bal + money);
+								bank.SetBankBalance(acc_bal + money);
 
 								cout << "\tТекущий баланс на счёте: " << acc_bal + money << endl;
 
