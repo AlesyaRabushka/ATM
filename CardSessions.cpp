@@ -200,7 +200,7 @@ void CardSessions::CopyAccount() {
 }
 
 // оплата с карточки на счёт за услуги
-void Payement::Pay(Card& card) {
+void Payement::Pay(Card& card, Bank& bank) {
 	int money;
 	CardSessions::CopyAccount();
 	ofstream record("ac.txt");
@@ -248,7 +248,7 @@ void Payement::Pay(Card& card) {
 								record << acc_holder << endl;
 								read >> acc_bal;
 								record << acc_bal + money << endl;
-								
+								bank.SetAccBalance(acc_bal + money);
 
 								cout << "\tТекущий баланс на счёте: " << acc_bal + money << endl;
 
