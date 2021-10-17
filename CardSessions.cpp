@@ -63,7 +63,13 @@ void GiveMoney::MoneyOut(Card& card) {
 			cin >> k;
 			switch (k) {
 			case 1: {
+				cout << "\tЗаберите ваш чек!" << endl;
+				cout << "\tКод операции: 002" << endl;
+				cout << "\tСумма выдачи: " << money << endl;
+				CardSessions::PauseF();
+				cout << endl;
 				break;
+				
 			}
 			case 2: {
 				break;
@@ -193,7 +199,7 @@ void CardSessions::CopyAccount() {
 	new_account.close();
 }
 
-// оплата с карточки за услуги
+// оплата с карточки на счёт за услуги
 void Payement::Pay(Card& card) {
 	int money;
 	CardSessions::CopyAccount();
@@ -218,12 +224,7 @@ void Payement::Pay(Card& card) {
 					else {
 						card.CopyData();
 						ofstream record_("card.txt");
-						
-						
 						ifstream read("newac.txt");
-						
-						
-						
 						
 						int new_money = card.GetCardBalance() - money;
 
@@ -247,7 +248,9 @@ void Payement::Pay(Card& card) {
 								record << acc_holder << endl;
 								read >> acc_bal;
 								record << acc_bal + money << endl;
-								cout << "\tТеекущий баланс на счёте: " << acc_bal + money << endl;
+								
+
+								cout << "\tТекущий баланс на счёте: " << acc_bal + money << endl;
 
 								CardSessions::PauseF();
 								cout << endl << "\tЖелаете забрать чек? " << endl;
