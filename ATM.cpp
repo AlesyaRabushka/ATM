@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include "Card.h"
 #include "MenuOperations.h"
 #include "CardSessions.h"
@@ -17,6 +17,8 @@ int main() {
 		int k;
 		cin >> k;
 		Card card;
+		Bank bank;
+
 		switch (k) {
 		case 1: {
 			CardSessions::ShowBalance(card);
@@ -35,7 +37,11 @@ int main() {
 			break;
 		}
 		case 6: {
-			Payement::Pay(card);
+			Payement::Pay(card, bank);
+			break;
+		}
+		case 7: {
+			bank.Print();
 			break;
 		}
 
