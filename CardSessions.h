@@ -34,7 +34,7 @@ public:
 
 
 // GET MONEY CLASS (FROM CARD)
-class GetMoney : public CardSessions {
+class GetMoney : public CardSessions, public Card {
 public:
 	static void MoneyIn(Card&);
 };
@@ -42,10 +42,10 @@ public:
 // PAYEMENT (GROM CARD)
 class Payement : public GetMoney {
 public:
-	static void Pay(Card&);
+	static void Pay(Card&, Bank&);
 };
 
 //EXCHANGE CURRENCY CLASS
-class Exchange : public Bank, public CardSessions {
-
-};
+//class Exchange : public Bank, public CardSessions {
+//
+//};
