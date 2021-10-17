@@ -4,7 +4,7 @@
 #include "Card.h"
 using namespace std;
 
-// конструктор
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 Bankomat::Bankomat() {
 
 	ifstream from_card("card.txt");
@@ -23,7 +23,7 @@ Bankomat::Bankomat() {
 }
 
 
-//геттеры и сеттеры
+//РіРµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
 string Bankomat::GetNumber() {
 	return number;
 }
@@ -59,7 +59,7 @@ void Bankomat::SetBalance(int balance) {
 	this->balance = balance;
 }
 
-// копирование данных о карточке
+// РєРѕРїРёСЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С… Рѕ РєР°СЂС‚РѕС‡РєРµ
 void Bankomat::CopyData() {
 	ifstream from_card("card.txt");
 	ofstream new_card("newcard.txt");
@@ -89,7 +89,7 @@ void Bankomat::CopyData() {
 	new_card.close();
 }
 
-// копирование данных о счете в банке
+// РєРѕРїРёСЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С… Рѕ СЃС‡РµС‚Рµ РІ Р±Р°РЅРєРµ
 void Bankomat::CopyAccount() {
 	ifstream from_account("ac.txt");
 	ofstream new_account("newac.txt");
@@ -112,7 +112,7 @@ void Bankomat::CopyAccount() {
 	new_account.close();
 }
 
-// вывод информации на экран
+// РІС‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё РЅР° СЌРєСЂР°РЅ
 void Bankomat::Print() {
-	cout << "\tДоступные средства: " << GetBalance() << endl;
+	cout << "\tР”РѕСЃС‚СѓРїРЅС‹Рµ СЃСЂРµРґСЃС‚РІР°: " << GetBalance() << endl;
 }
