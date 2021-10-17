@@ -21,4 +21,7 @@ public:
 	string GetAccNumber();
 	string GetAccHolder();
 	int GetAccBalance();
+	
+	//информация о счете
+	void Print();
 };
