@@ -2,25 +2,16 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Bankomat.h"
 
 using namespace std;
 
-class Bank
+// BANK CLASS
+class Bank: public Bankomat
 {
-private:
-	string bank_number;
-	string bank_holder;
-	int bank_balance = 0;
-
 public:
+	// конструктор 
 	Bank();
-	void SetBankNumber(string);
-	void SetBankHolder(string);
-	void SetBankBalance(int);
-
-	string GetBankNumber();
-	string GetBankHolder();
-	int GetBankBalance();
-
+	// вывод на экран
 	void Print();
 };

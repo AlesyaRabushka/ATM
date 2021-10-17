@@ -1,88 +1,41 @@
 #include <iostream>
 #include "Card.h"
 
-//ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ -----  Ð²Ð²Ð¾Ð´ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐµ Ð¸Ð· Ñ„Ð°Ð¹Ð»Ð¸ÐºÐ°
+//êîíñòðóêòîð -----  ââîä äàííûõ î êàðòî÷êå èç ôàéëèêà
 Card::Card() {
 
-	card_number = "no";
-	card_holder = "no";
-	card_pin = 0;
-	card_cvv = 0;
+	string card_number = "no";
+	string card_holder = "no";
+	string card_data = "no";
+	int card_pin = 0;
+	int card_cvv = 0;
+	int card_balance;
+	string empty;
 
 	ifstream from_card("card.txt");
 	if (from_card) {
 		getline(from_card, card_number);
+		SetNumber(card_number);
 		getline(from_card, card_data);
+		SetCardData(card_data);
 		getline(from_card, card_holder);
+		SetHolder(card_holder);
 		from_card >> card_pin;
 		getline(from_card, empty);
+		SetCardPin(card_pin);
 		from_card >> card_cvv;
 		getline(from_card, empty);
 		from_card >> card_balance;
+		SetBalance(card_balance);
 
 	}
 	from_card.close();
 }
 
-//Ð³ÐµÑ‚Ñ‚ÐµÑ€Ñ‹ Ð¸ ÑÐµÑ‚Ñ‚ÐµÑ€Ñ‹
-string Card::GetCardNumber() {
-	return card_number;
-}
-string Card::GetCardHolder() {
-	return card_holder;
-}
-string Card::GetCardData() {
-	return card_data;
-}
-int Card::GetCardPin() {
-	return card_pin;
-}
-int Card::GetCardBalance() {
-	return card_balance;
-}
-int Card::GetCardCvv() {
-	return card_cvv;
-}
-
-void Card::SetCardNumber(string number) {
-	this->card_number = number;
-}
-void Card::SetCardHolder(string holder) {
-	this->card_holder = holder;
-}
-void Card::SetCardPin(int pin) {
-	this->card_pin = pin;
-}
-void Card::SetCardData(string data) {
-	this->card_data = data;
-}
-
-// ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐµ
-void Card::CopyData() {
-	ifstream from_card("card.txt");
-	ofstream new_card("newcard.txt");
-
-	if (from_card) {
-		if (new_card) {
-			getline(from_card, card_number);
-			getline(from_card, card_data);
-			getline(from_card, card_holder);
-
-			from_card >> card_pin;
-			getline(from_card, empty);
-			from_card >> card_cvv;
-			getline(from_card, empty);
-			from_card >> card_balance;
-
-			new_card << card_number << endl;
-			new_card << card_data << endl;
-			new_card << card_holder << endl;
-
-			new_card << card_balance << endl;
-			new_card << card_pin << endl;
-			new_card << card_cvv << endl;
-		}
-	}
-	from_card.close();
-	new_card.close();
+// âûâîä äàííûõ î êàðòî÷êå
+void Card::Print() {
+	cout << "\tÍîìåð êàðòî÷êè: " << GetNumber() << endl;
+	cout << "\tÂëàäåëåö êàðòî÷êè: " << GetHolder() << endl;
+	cout << "\tÑðîê ýêñïëóòàöèè: " << GetCardData() << endl;
+	Bankomat::Print();
 }

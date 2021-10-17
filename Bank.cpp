@@ -6,40 +6,25 @@
 using namespace std;
 
 Bank::Bank() {
-	bank_number = "no";
-	bank_holder = "no";
-	bank_balance = 0;
+	string bank_number = "no";
+	string bank_holder = "no";
+	int bank_balance = 0;
 
 	ifstream from_acc("ac.txt");
 	if (from_acc) {
 		getline(from_acc, bank_number);
+		SetNumber(bank_number);
 		getline(from_acc, bank_holder);
+		SetHolder(bank_holder);
 		from_acc >> bank_balance;
+		SetBalance(bank_balance);
+
 	}
 	from_acc.close();
 }
 
-void Bank::SetBankBalance(int balance) {
-	this->bank_balance = balance;
-}
-void Bank::SetBankHolder(string holder) {
-	this->bank_holder = holder;
-}
-void Bank::SetBankNumber(string number) {
-	this->bank_number = number;
-}
-
-string Bank::GetBankNumber() {
-	return bank_number;
-}
-string Bank::GetBankHolder() {
-	return bank_holder;
-}
-int Bank::GetBankBalance() {
-	return bank_balance;
-}
-
 void Bank::Print() {
-	cout << "\tĞĞ¾Ğ¼ĞµÑ€ ÑÑ‡Ñ‘Ñ‚Ğ°: " << Bank::GetBankNumber() << endl;
-	cout << "\tĞ”Ğ¾ÑÑƒĞ¿Ğ½Ñ‹Ğµ ÑÑ€ĞµĞ´ÑÑ‚Ğ²Ğ°: " << Bank::GetBankBalance() << endl << endl;
+	cout << "\tÍîìåğ ñ÷åòà: " << GetNumber() << endl;
+	cout << "\tÂëàäåëåö ñ÷åòà: " << GetHolder() << endl;
+	Bankomat::Print();
 }
