@@ -6,55 +6,55 @@
 
 using namespace std;
 
-// выписка о пополнении средств карточки
+// РІС‹РїРёСЃРєР° Рѕ РїРѕРїРѕР»РЅРµРЅРёРё СЃСЂРµРґСЃС‚РІ РєР°СЂС‚РѕС‡РєРё
 void Statement::ToFileIn(Card& card, int money) {
 	ofstream record("statement.txt", ios::app);
 
 	if (record) {
 		record << "\t--------------------------------" << endl;
-		record << "\tПополнение средств:" << endl;
-		record << "\tНомер карты: " << card.GetNumber() << endl;
-		record << "\tСумма операции: " << money << endl;
-		record << "\tДоступные средства: " << card.GetBalance() << endl;
+		record << "\tРџРѕРїРѕР»РЅРµРЅРёРµ СЃСЂРµРґСЃС‚РІ:" << endl;
+		record << "\tРќРѕРјРµСЂ РєР°СЂС‚С‹: " << card.GetNumber() << endl;
+		record << "\tРЎСѓРјРјР° РѕРїРµСЂР°С†РёРё: " << money << endl;
+		record << "\tР”РѕСЃС‚СѓРїРЅС‹Рµ СЃСЂРµРґСЃС‚РІР°: " << card.GetBalance() << endl;
 		record << "\t--------------------------------" << endl;
 	}
 
 	record.close();
 }
 
-// выписка о снятии средств с карточки
+// РІС‹РїРёСЃРєР° Рѕ СЃРЅСЏС‚РёРё СЃСЂРµРґСЃС‚РІ СЃ РєР°СЂС‚РѕС‡РєРё
 void Statement::ToFileFrom(Card& card, int money) {
 	ofstream record("statement.txt", ios::app);
 
 	if (record) {
 		record << "\t--------------------------------" << endl;
-		record << "\tСнятие средств:" << endl;
-		record << "\tНомер карты : " << card.GetNumber() << endl;
-		record << "\tСумма операции: " << money << endl;
-		record << "\tОстаток средств: " << card.GetBalance() << endl;
+		record << "\tРЎРЅСЏС‚РёРµ СЃСЂРµРґСЃС‚РІ:" << endl;
+		record << "\tРќРѕРјРµСЂ РєР°СЂС‚С‹ : " << card.GetNumber() << endl;
+		record << "\tРЎСѓРјРјР° РѕРїРµСЂР°С†РёРё: " << money << endl;
+		record << "\tРћСЃС‚Р°С‚РѕРє СЃСЂРµРґСЃС‚РІ: " << card.GetBalance() << endl;
 		record << "\t--------------------------------" << endl;
 	}
 
 	record.close();
 }
 
-//выписка о пополнении счета в банке
+//РІС‹РїРёСЃРєР° Рѕ РїРѕРїРѕР»РЅРµРЅРёРё СЃС‡РµС‚Р° РІ Р±Р°РЅРєРµ
 void Statement::ToFileIn(Bank& bank, int money) {
 	ofstream record("statement.txt", ios::app);
 
 	if (record) {
 		record << "\t--------------------------------" << endl;
-		record << "\tПополнение счета:" << endl;
-		record << "\tСчет получателя: " << bank.GetNumber() << endl;
-		record << "\tСумма операции: " << money << endl;
-		record << "\tДоступные средства: " << bank.GetBalance() << endl;
+		record << "\tРџРѕРїРѕР»РЅРµРЅРёРµ СЃС‡РµС‚Р°:" << endl;
+		record << "\tРЎС‡РµС‚ РїРѕР»СѓС‡Р°С‚РµР»СЏ: " << bank.GetNumber() << endl;
+		record << "\tРЎСѓРјРјР° РѕРїРµСЂР°С†РёРё: " << money << endl;
+		record << "\tР”РѕСЃС‚СѓРїРЅС‹Рµ СЃСЂРµРґСЃС‚РІР°: " << bank.GetBalance() << endl;
 		record << "\t--------------------------------" << endl;
 	}
 
 	record.close();
 }
 
-// вывод выписки
+// РІС‹РІРѕРґ РІС‹РїРёСЃРєРё
 void Statement::Print() {
 	ifstream read("statement.txt");
 
