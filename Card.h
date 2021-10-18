@@ -8,11 +8,11 @@
 using namespace std;
 
 //CARD CLASS
-class Card: public Bankomat{
+class Card: virtual public Bankomat{
 
 public:
-	//конструктор --- ввод данных из файлика
+	//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ --- РІРІРѕРґ РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»РёРєР°
 	Card();
-	// вывод на экран
-	void Print();
+	// РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
+	void Print() override;
 };
