@@ -7,11 +7,11 @@
 using namespace std;
 
 // BANK CLASS
-class Bank: public Bankomat
+class Bank: virtual public Bankomat
 {
 public:
 	// конструктор 
 	Bank();
 	// вывод на экран
-	void Print();
+	void Print() override;
 };
