@@ -4,15 +4,14 @@
 #include <string>
 #include "Bankomat.h"
 
-
 using namespace std;
 
 //CARD CLASS
 class Card: virtual public Bankomat{
 
 public:
-	//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ --- РІРІРѕРґ РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»РёРєР°
+	//конструктор --- ввод данных из файлика
 	Card();
-	// РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
+	// вывод на экран
 	void Print() override;
 };

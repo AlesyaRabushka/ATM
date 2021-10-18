@@ -1,15 +1,18 @@
 #pragma once
 #include <iostream>
+#include "Card.h"
+#include "CardSessions.h"
+#include "Bank.h"
+#include "Currency.h"
+#include "Statement.h"
+
 
 using namespace std;
 
-void Menu() {
-	cout << "\tВыберите операцию:" << endl;
-	cout << "\t1 - Остаток на счете" << endl;
-	cout << "\t2 - Выдача наличных" << endl;
-	cout << "\t3 - Перевод" << endl;
-	cout << "\t4 - Смена пин-кода" << endl;
-	cout << "\t5 - Добавить на карточку" << endl;
-	cout << "\t6 - Перевести на счет в банке" << endl;
-	cout << "\t7 - Показать инфу про счёт" << endl;
-}
+// MENU OPERATIONS CLASS
+class MenuOperations: virtual public Card, virtual public Bank, public GiveMoney , public GetMoney, public ChangePin, public Currency, public Payement, public Statement{
+
+public:
+	//основное меню программы
+	void Print();
+}; 

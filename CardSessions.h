@@ -2,18 +2,19 @@
 #include <string>
 #include "Bank.h"
 #include "Card.h"
+#include "Statement.h"
 
 //  SESSIONS CLASS
 class CardSessions {
 
 public:
-	//РґР»СЏ РІС‹РІРѕРґР° СЃ РїР°СѓР·РѕР№
+	//для вывода с паузой
 	static void PauseF();
 };
 
 
-// GIVE MONEY CLASS (TO CARD)
-class GiveMoney : public CardSessions, public Bankomat {
+// GIVE MONEY CLASS (FROM CARD)
+class GiveMoney : public CardSessions, public Statement {
 public:
 	static void MoneyOut(Card&);
 };
@@ -21,24 +22,18 @@ public:
 // CHANGE CARD PIN CLASS
 class ChangePin : public Bankomat{
 public:
-	//СЃРјРµРЅР° РїРёРЅ-РєРѕРґР° РЅР° РєР°СЂС‚РѕС‡РєРµ
-	static void ChangeCardPin(Card&, int);//РЅРµСЃС‚Р°С‚РёС‡РµСЃРєР°СЏ СЃСЃС‹Р»РєР° РЅР° С‡Р»РµРЅ РґРѕР»Р¶РЅР° СѓРєР°Р·С‹РІР°С‚СЊСЃСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ Р·Р°РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, Р° РјС‹ РµРіРѕ РЅРµ СЃРѕР·РґР°С‘Рј)
+	//смена пин-кода на карточке
+	static void ChangeCardPin(Card&, int);//нестатическая ссылка на член должна указываться относительно заданного объекта, а мы его не создаём)
 };
 
-// GET MONEY CLASS (FROM CARD)
-class GetMoney : public CardSessions, public Card {
+// GET MONEY CLASS (TO CARD)
+class GetMoney : public CardSessions, public Statement {
 public:
 	static void MoneyIn(Card&);
 };
 
 // PAYEMENT (FROM CARD)
-class Payement : public Bankomat, public CardSessions {
+class Payement : public CardSessions, public Statement {
 public:
 	static void Pay(Card&, Bank&);
 };
-
-
-//EXCHANGE CURRENCY CLASS
-//class Exchange : public Bank, public CardSessions {
-//
-//};

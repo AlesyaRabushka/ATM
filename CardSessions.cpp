@@ -2,10 +2,11 @@
 #include "CardSessions.h"
 #include <Windows.h>
 #include <string>
+#include "Statement.h"
 
 using namespace std;
 
-// РїР°СѓР·Р°
+// пауза
 void CardSessions::PauseF() {
 	cout << "\t. ";
 	Sleep(1000);
@@ -16,18 +17,18 @@ void CardSessions::PauseF() {
 	cout << endl;
 }
 
-// СЃРЅСЏС‚СЊ РґРµРЅСЊРіРё СЃ РєР°СЂС‚РѕС‡РєРё
+// снять деньги с карточки
 void GiveMoney::MoneyOut(Card& card) {
 	int money;
 	card.CopyData();
 	ofstream record_("card.txt");
 
 	
-	cout << "\tР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РІС‹РґР°С‡Рё: ";
+	cout << "\tВведите сумму выдачи: ";
 	cin >> money;
 	try {
 		if (money > card.GetBalance() || money < 0) {
-			throw "\tРћРїРµСЂР°С†РёСЏ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РІС‹РїРѕР»РЅРµРЅР°! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р· РїРѕР·Р¶Рµ.";
+			throw "\tОперация не может быть выполнена! Попробуйте ещё раз позже.";
 		}
 		else {
 
@@ -40,22 +41,24 @@ void GiveMoney::MoneyOut(Card& card) {
 				record_ << card.GetCardPin() << endl;
 				record_ << card.GetCardCvv() << endl;
 				record_ << new_money << endl;
+				card.SetBalance(new_money);
 			}
 
 			
 			PauseF();
-			cout << "\tР—Р°Р±РµСЂРёС‚Рµ РІР°С€Рё РґРµРЅСЊРіРё!" << endl <<  endl;
+			cout << endl << "\tЗаберите ваши деньги!" << endl;
 			PauseF();
-			cout << endl << "\tР–РµР»Р°РµС‚Рµ Р·Р°Р±СЂР°С‚СЊ С‡РµРє? " << endl;
-			cout << "\t1 - Р”Р°" << endl << "\t2 - РќРµС‚" << endl;
+			cout << endl << "\tЖелаете забрать чек? " << endl;
+			cout << "\t1 - Да" << endl << "\t2 - Нет" << endl;
 			int k;
 			cin >> k;
 			switch (k) {
 			case 1: {
-				PauseF();
-				cout << "\tР—Р°Р±РµСЂРёС‚Рµ РІР°С€ С‡РµРє!" << endl;
-				cout << "\tРљРѕРґ РѕРїРµСЂР°С†РёРё: 002" << endl;
-				cout << "\tРЎСѓРјРјР° РІС‹РґР°С‡Рё: " << money << endl;
+				cout << "\tЗаберите ваш чек!" << endl;
+				cout << "\t--------------------" << endl;
+				cout << "\tКод операции: 002" << endl;
+				cout << "\tСумма выдачи: " << money << endl;
+				cout << "\t--------------------" << endl;
 				PauseF();
 				cout << endl;
 				break;
@@ -80,14 +83,15 @@ void GiveMoney::MoneyOut(Card& card) {
 		}
 	}
 
+	ToFileFrom(card, money);
 	record_.close();
 	//remove("newcard.txt");
 }
 
-// РїРѕР»РѕР¶РёС‚СЊ РґРµРЅСЊРіРё РЅР° РєР°СЂС‚РѕС‡РєСѓ
+// положить деньги на карточку
 void GetMoney::MoneyIn(Card& card) {
 	int money;
-	cout << "\tР’СЃР°РІСЊС‚Рµ РєСѓРїСЋСЂСѓ: ";
+	cout << "\tВставьте купюру: ";
 	cin >> money;
 	ofstream record("card.txt");
 	int new_money = card.GetBalance() + money;
@@ -103,16 +107,17 @@ void GetMoney::MoneyIn(Card& card) {
 	}
 	cout << endl;
 	PauseF();
-	cout << "\tРћРґРѕР±СЂРµРЅРѕ! РћРїРµСЂР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР° СѓСЃРїРµС€РЅРѕ!" << endl;
+	cout << "\tОдобрено! Операция выполнена успешно!" << endl;
 	record.close();
+	ToFileIn(card, money);
 }
 
-// РѕРїР»Р°С‚Р° СЃ РєР°СЂС‚РѕС‡РєРё РЅР° СЃС‡С‘С‚ Р·Р° СѓСЃР»СѓРіРё
+// оплата с карточки на счёт за услуги
 void Payement::Pay(Card& card, Bank& bank) {
 	int money;
 	bank.CopyAccount();
 	ofstream record("ac.txt");
-	cout << "\tР’РІРµРґРёС‚Рµ РїРёРЅ-РєРѕРґ: ";
+	cout << "\tВведите пин-код: ";
 	int pin;
 	cin >> pin;
 	for (int i = 3; i >= 1; i--) {
@@ -122,12 +127,12 @@ void Payement::Pay(Card& card, Bank& bank) {
 				cout << pin << endl;
 			}
 			else if(pin == card.GetCardPin()) {
-				cout << "\tР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґР°: ";
+				cout << "\tВведите сумму перевода: ";
 				cin >> money;
 				try {
 
 					if (money < 0) {
-						throw "\tРћРїРµСЂР°С†РёСЏ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РІС‹РїРѕР»РЅРµРЅР°! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р· РїРѕР·Р¶Рµ.";
+						throw "\tОперация не может быть выполнена! Попробуйте ещё раз позже.";
 					}
 					else {
 						card.CopyData();
@@ -156,21 +161,22 @@ void Payement::Pay(Card& card, Bank& bank) {
 								read >> acc_bal;
 								record << acc_bal + money << endl;
 								bank.SetBalance(acc_bal + money);
-
-								cout << "\tРўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ РЅР° СЃС‡С‘С‚Рµ: " << acc_bal + money << endl;
+								ToFileIn(bank, money);
+								
 
 								PauseF();
-								cout << endl << "\tР–РµР»Р°РµС‚Рµ Р·Р°Р±СЂР°С‚СЊ С‡РµРє? " << endl;
-								cout << "\t1 - Р”Р°" << endl << "\t2 - РќРµС‚" << endl;
+								cout << endl << "\tЖелаете забрать чек? " << endl;
+								cout << "\t1 - Да" << endl << "\t2 - Нет" << endl;
 								int k;
 								cin >> k;
 								switch (k) {
 								case 1: {
-									PauseF();
-									cout << "\tР—Р°Р±РµСЂРёС‚Рµ РІР°С€ С‡РµРє!" << endl << endl;
-									cout << "\tРљРѕРґ РѕРїРµСЂР°С†РёРё: 001" << endl;
-									cout << "\tРЎС‡РµС‚ РїРѕР»СѓС‡Р°С‚РµР»СЏ: " << acc_number << endl;
-									cout << "\tРЎСѓРјРјР° РїРµСЂРµРІРѕРґР°: " << money << endl;
+									cout << "\tЗаберите ваш чек!" << endl << endl;
+									cout << "\t--------------------" << endl;
+									cout << "\tКод операции: 001" << endl;
+									cout << "\tСчет получателя: " << acc_number << endl;
+									cout << "\tСумма перевода: " << money << endl;
+									cout << "\t--------------------" << endl;
 									PauseF();
 									cout << endl;
 									break;
@@ -206,12 +212,12 @@ void Payement::Pay(Card& card, Bank& bank) {
 	//system("cls");
 }
 
-// СЃРјРµРЅРёС‚СЊ РїР°СЂРѕР»СЊ РЅР° РєР°СЂС‚РѕС‡РєРµ
+// сменить пароль на карточке
 void ChangePin::ChangeCardPin(Card& card, int old) {
 	bool flag;
 	for (int i = 3; i >= 1; i--)
 	{
-		cout << "\tР’РІРµРґРёС‚Рµ СЃС‚Р°СЂС‹Р№ РїРёРЅ-РєРѕРґ: ";
+		cout << "\tВведите старый пин-код: ";
 		int old_pin, new_pin;
 		cin >> old_pin;
 
@@ -220,14 +226,14 @@ void ChangePin::ChangeCardPin(Card& card, int old) {
 			card.CopyData();
 			ifstream read("newcard.txt");
 			ofstream record("card.txt");
-			cout << "\tР’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РїРёРЅ-РєРѕРґ: ";
+			cout << "\tВведите новый пин-код: ";
 			try {
 				cin >> new_pin;
 				if (new_pin >= 10000) {
-					throw "\tРћС‚РєР»РѕРЅРµРЅРѕ! РџРёРЅ-РєРѕРґ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹Рј С‚СЂРµР±РѕРІР°РЅРёСЏРј. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р· РїРѕР·Р¶Рµ!";
+					throw "\tОтклонено! Пин-код не соответствует установленным требованиям. Попробуйте ещё раз позже!";
 				}
 				card.SetCardPin(new_pin);
-				cout << "\tРћРїРµСЂР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР° СѓСЃРїРµС€РЅРѕ!" << endl;
+				cout << "\tОперация выполнена успешно!" << endl;
 			}
 			catch (const char* exception) {
 				cerr << exception << endl;
@@ -253,12 +259,12 @@ void ChangePin::ChangeCardPin(Card& card, int old) {
 			flag = 0;
 			if (i - 1 == 0) break;
 			else {
-				cout << "\tРќРµРІРµСЂРЅС‹Р№ РїРёРЅ-РєРѕРґ! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·! РћСЃС‚Р°Р»РѕСЃСЊ РїРѕРїС‹С‚РѕРє: " << i - 1 << endl;
+				cout << "\tНеверный пин-код! Попробуйте ещё раз! Осталось попыток: " << i - 1 << endl;
 			}
 		}
 	}
 	if (flag == 0) {
-		cout << "\tРќРµРІРµСЂРЅС‹Р№ РїРёРЅ-РєРѕРґ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРѕР·Р¶Рµ!" << endl;
+		cout << "\tНеверный пин-код. Попробуйте позже!" << endl;
 	}
 	cout << endl;
 }

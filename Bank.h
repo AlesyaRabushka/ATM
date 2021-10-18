@@ -10,8 +10,8 @@ using namespace std;
 class Bank: virtual public Bankomat
 {
 public:
-	// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ 
+	// конструктор 
 	Bank();
-	// РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
+	// вывод на экран
 	void Print() override;
 };
