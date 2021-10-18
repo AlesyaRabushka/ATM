@@ -94,7 +94,7 @@ void MenuOperations::Print() {
 			CardSessions::PauseF();
 			system("cls");
 			cout << endl << endl << endl << endl << endl << endl << endl;
-			cout << "\t\t\t\t\t Спасибо, что использовали наш банкомат!" << endl;
+			cout << "\t\t\t\t\t Спасибо, что воспользовались нашим банкоматом!" << endl;
 			cout << endl << endl << endl << endl << endl << endl << endl;
 			exit(0);
 		}
