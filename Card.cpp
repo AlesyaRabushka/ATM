@@ -34,8 +34,8 @@ Card::Card() {
 
 // вывод данных о карточке
 void Card::Print() {
-	cout << "\tÍîěĺđ ęŕđňî÷ęč: " << GetNumber() << endl;
-	cout << "\tÂëŕäĺëĺö ęŕđňî÷ęč: " << GetHolder() << endl;
-	cout << "\tŃđîę ýęńďëóňŕöčč: " << GetCardData() << endl;
+	cout << "\tНомер карточки: " << GetNumber() << endl;
+	cout << "\tВладелец карточки: " << GetHolder() << endl;
+	cout << "\tСрок эксплутации: " << GetCardData() << endl;
 	Bankomat::Print();
 }
