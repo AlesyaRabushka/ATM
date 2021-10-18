@@ -16,7 +16,6 @@ int main() {
 		Menu();
 		int k;
 		cin >> k;
-		Bankomat bankomat;
 		Card card;
 		Bank bank;
 		 
