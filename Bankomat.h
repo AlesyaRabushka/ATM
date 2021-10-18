@@ -39,6 +39,6 @@ public:
 	void CopyAccount();
 
 	// вывод на экран данных
-	void Print();
+	virtual void Print() = 0;
 };
 
