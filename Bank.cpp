@@ -23,8 +23,9 @@ Bank::Bank() {
 	from_acc.close();
 }
 
+
 void Bank::Print() {
 	cout << "\tНомер счета: " << GetNumber() << endl;
 	cout << "\tВладелец счета: " << GetHolder() << endl;
-	Bankomat::Print();
+	cout << "\tДоступные средства: " << GetBalance() << endl;
 }
