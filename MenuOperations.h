@@ -13,6 +13,6 @@ using namespace std;
 class MenuOperations: virtual public Card, virtual public Bank, public GiveMoney , public GetMoney, public ChangePin, public Currency, public Payement, public Statement{
 
 public:
-	//основное меню программы
+	//РѕСЃРЅРѕРІРЅРѕРµ РјРµРЅСЋ РїСЂРѕРіСЂР°РјРјС‹
 	void Print();
 }; 
