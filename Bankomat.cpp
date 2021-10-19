@@ -36,7 +36,7 @@ string Bankomat::GetCardData() {
 int Bankomat::GetCardPin() {
 	return card_pin;
 }
-int Bankomat::GetBalance() {
+double Bankomat::GetBalance() {
 	return balance;
 }
 int Bankomat::GetCardCvv() {
@@ -55,7 +55,7 @@ void Bankomat::SetCardPin(int pin) {
 void Bankomat::SetCardData(string data) {
 	this->card_data = data;
 }
-void Bankomat::SetBalance(int balance) {
+void Bankomat::SetBalance(double balance) {
 	this->balance = balance;
 }
 
