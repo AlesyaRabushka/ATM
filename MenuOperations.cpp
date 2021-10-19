@@ -38,23 +38,32 @@ void MenuOperations::Print() {
 		case 3: {
 			system("cls");
 			int a;
-			cout << "\tВыберите операцию:" << endl;
-			cout << "\t1 - Курс валюты" << endl;
-			cout << "\t2 - Выдача наличных иностранной валюты" << endl;
-			cin >> a;
-			switch (a)
-			{
-			case 1: {
-				Currency::Print();
-				break;
-			}
-			case 2: {
-				int i = Choice();
-				Currency::MoneyOut(card, i);
-				break;
-			}
-			default:
-				cout << "\tНеверный номер операции! Попробуйте еще раз." << endl;
+			while (true) {
+				cout << "\tВыберите операцию:" << endl;
+				cout << "\t1 - Курс валюты" << endl;
+				cout << "\t2 - Выдача наличных иностранной валюты" << endl;
+				cout << "\t0 - Вернуться в главное меню" << endl;
+				cin >> a;
+				switch (a)
+				{
+				case 1: {
+					Currency::Print();
+					break;
+				}
+				case 2: {
+					int i = Choice();
+					if (i != 0) {
+						Currency::MoneyOut(card, i);
+					}
+					break;
+				}
+				case 0: {
+					break;
+				}
+				default:
+					cout << "\tНеверный номер операции! Попробуйте еще раз." << endl;
+					break;
+				}
 				break;
 			}
 			break;
