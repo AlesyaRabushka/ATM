@@ -8,7 +8,7 @@ using namespace std;
 Bank::Bank() {
 	string bank_number = "no";
 	string bank_holder = "no";
-	int bank_balance = 0;
+	double bank_balance = 0;
 
 	ifstream from_acc("ac.txt");
 	if (from_acc) {
@@ -24,6 +24,9 @@ Bank::Bank() {
 }
 
 void Bank::Print() {
+	cout << "\t-------------------------------------" << endl;
+	cout << "\t     Данные банковского счета: " << endl;
+	cout << "\t-------------------------------------" << endl;
 	cout << "\tНомер счета: " << GetNumber() << endl;
 	cout << "\tВладелец счета: " << GetHolder() << endl;
 	cout << "\tДоступные средства: " << GetBalance() << endl;
