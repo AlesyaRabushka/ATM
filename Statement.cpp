@@ -7,7 +7,7 @@
 using namespace std;
 
 // выписка о пополнении средств карточки
-void Statement::ToFileIn(Card& card, int money) {
+void Statement::ToFileIn(Card& card, double money) {
 	ofstream record("statement.txt", ios::app);
 
 	if (record) {
@@ -23,7 +23,7 @@ void Statement::ToFileIn(Card& card, int money) {
 }
 
 // выписка о снятии средств с карточки
-void Statement::ToFileFrom(Card& card, int money) {
+void Statement::ToFileFrom(Card& card, double money) {
 	ofstream record("statement.txt", ios::app);
 
 	if (record) {
@@ -39,7 +39,7 @@ void Statement::ToFileFrom(Card& card, int money) {
 }
 
 //выписка о пополнении счета в банке
-void Statement::ToFileIn(Bank& bank, int money) {
+void Statement::ToFileIn(Bank& bank, double money) {
 	ofstream record("statement.txt", ios::app);
 
 	if (record) {
