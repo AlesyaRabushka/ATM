@@ -22,7 +22,7 @@ void Currency::Print() {
 int Currency::Choice() {
 	int a, value = 0;
 	cout << "\tВЫБЕРИТЕ ВАЛЮТУ" << endl << endl;
-	cout << "\t1 - " << kazah << kazah_t << endl <<  "\t*минимальная доступная сумма: 1740 тенге" << endl;
+	cout << "\t1 - " << kazah << kazah_t << endl << "\t*минимальная доступная сумма: 1740 тенге" << endl;
 	cout << "\t2 - " << kvacha << kvacha_t << endl << "\t*минимальная доступная сумма: 70 квач" << endl;;
 	cout << "\t3 - " << kirgiz << kirgiz_t << endl << "\t*минимальная доступная сумма: 350 сом" << endl;;
 	cout << "\t4 - " << ukrain << ukrain_t << endl << "\t*минимальная доступная сумма: 110 гривен" << endl;;
@@ -30,22 +30,24 @@ int Currency::Choice() {
 	cin >> a;
 	cout << "\tВведите сумму, которую желаете снять (в выбранной валюте): " << endl;
 	cin >> value;
-
+	
 	switch (a)
 	{
 	case 1: {
-		
+
 		if (value < 1740) {
-			cout << "\tМинимальная доступная сумма: 1740 тенге. Попробуйте еще раз!" << endl;
+			cout << "\tМинимальная доступная сумма: 1740 тенге. Попробуйте еще раз позже!" << endl << endl;
+			value = 0;
 			break;
 		}
-			value /= kazah;
-		
-			break;
+		value /= kazah;
+
+		break;
 	}
 	case 2: {
 		if (value < 70) {
-			cout << "\tМинимальная доступная сумма: 70 квач. Попробуйте еще раз!" << endl;
+			cout << "\tМинимальная доступная сумма: 70 квач. Попробуйте еще раз позже!" << endl << endl;
+			value = 0;
 			break;
 		}
 		value /= kvacha;
@@ -53,7 +55,8 @@ int Currency::Choice() {
 	}
 	case 3: {
 		if (value < 350) {
-			cout << "\tМинимальная доступная сумма: 350 сом. Попробуйте еще раз!" << endl;
+			cout << "\tМинимальная доступная сумма: 350 сом. Попробуйте еще раз позже!" << endl << endl;
+			value = 0;
 			break;
 		}
 		value /= kirgiz;
@@ -61,7 +64,8 @@ int Currency::Choice() {
 	}
 	case 4: {
 		if (value < 110) {
-			cout << "\tМинимальная доступная сумма: 110 гривен. Попробуйте еще раз!" << endl;
+			cout << "\tМинимальная доступная сумма: 110 гривен. Попробуйте еще раз позже!" << endl << endl;
+			value = 0;
 			break;
 		}
 		value /= ukrain;
@@ -69,26 +73,25 @@ int Currency::Choice() {
 	}
 	case 5: {
 		if (value < 7770) {
-			cout << "\tМинимальная доступная сумма: 7770 кьят. Попробуйте еще раз!" << endl;
+			cout << "\tМинимальная доступная сумма: 7770 кьят. Попробуйте еще раз позже!" << endl << endl;
+			value = 0;
 			break;
 		}
 		value /= myanma;
 		break;
 	}
 	default:
-		cout << "\tНеверный номер операции! Попробуйте еще раз." << endl;
+		cout << "\tНеверный номер операции! Попробуйте еще раз." << endl << endl;
 		break;
 	}
-
+	
 	return value;
 }
 
 // снять с карточки 
 void Currency::MoneyOut(Card& card,int money) {
-	ofstream record_("card.txt");
-
-	
 	card.CopyData();
+	ofstream record_("card.txt");
 	try {
 		if (money > card.GetBalance() || money < 0) {
 			throw "\tОперация не может быть выполнена! Попробуйте ещё раз позже.";
