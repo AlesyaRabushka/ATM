@@ -12,7 +12,7 @@ private:
 	string holder;
 	string card_data;
 	int card_pin;
-	int balance = 0;
+	double balance = 0;
 	int card_cvv;
 	string empty;  //просто пустая строка, чтобы после считывания int можно было перейти на след строку
 
@@ -25,13 +25,13 @@ public:
 	void SetHolder(string);
 	void SetCardPin(int);
 	void SetCardData(string);
-	void SetBalance(int);
+	void SetBalance(double);
 
 	string GetNumber();
 	string GetHolder();
 	string GetCardData();
 	int GetCardPin();
-	int GetBalance();
+	double GetBalance();
 	int GetCardCvv();
 
 	//  копирование данных карточки, чтобы можно было менять какое-то поле
