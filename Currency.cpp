@@ -19,8 +19,9 @@ void Currency::Print() {
 }
 
 // обмен валют
-int Currency::Choice() {
-	int a, value = 0;
+double Currency::Choice() {
+	int a;
+	double value;
 	cout << "\tВЫБЕРИТЕ ВАЛЮТУ" << endl << endl;
 	cout << "\t1 - " << kazah << kazah_t << endl << "\t*минимальная доступная сумма: 1740 тенге" << endl;
 	cout << "\t2 - " << kvacha << kvacha_t << endl << "\t*минимальная доступная сумма: 70 квач" << endl;;
@@ -89,7 +90,7 @@ int Currency::Choice() {
 }
 
 // снять с карточки 
-void Currency::MoneyOut(Card& card,int money) {
+void Currency::MoneyOut(Card& card,double money) {
 	card.CopyData();
 	ofstream record_("card.txt");
 	try {
@@ -98,7 +99,7 @@ void Currency::MoneyOut(Card& card,int money) {
 		}
 		else {
 
-			int new_money = card.GetBalance() - money;
+			double new_money = card.GetBalance() - money;
 
 			if (record_) {
 				record_ << card.GetNumber() << endl;
@@ -148,5 +149,22 @@ void Currency::MoneyOut(Card& card,int money) {
 		}
 	}
 
+	ToFileFrom(card, money);
 	record_.close();
+}
+
+// запись в выписку
+void Currency::ToFileFrom(Card& card, double money) {
+	ofstream record("statement.txt", ios::app);
+
+	if (record) {
+		record << "\t--------------------------------" << endl;
+		record << "\tСнятие средств:" << endl;
+		record << "\tНомер карты : " << card.GetNumber() << endl;
+		record << "\tСумма операции: " << money << endl;
+		record << "\tОстаток средств: " << card.GetBalance() << endl;
+		record << "\t--------------------------------" << endl;
+	}
+
+	record.close();
 }
