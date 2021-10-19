@@ -19,7 +19,7 @@ void CardSessions::PauseF() {
 
 // снять деньги с карточки
 void GiveMoney::MoneyOut(Card& card) {
-	int money;
+	double money;
 	card.CopyData();
 	ofstream record_("card.txt");
 
@@ -32,7 +32,7 @@ void GiveMoney::MoneyOut(Card& card) {
 		}
 		else {
 
-			int new_money = card.GetBalance() - money;
+			double new_money = card.GetBalance() - money;
 
 			if (record_) {
 				record_ << card.GetNumber() << endl;
@@ -90,11 +90,11 @@ void GiveMoney::MoneyOut(Card& card) {
 
 // положить деньги на карточку
 void GetMoney::MoneyIn(Card& card) {
-	int money;
+	double money;
 	cout << "\tВставьте купюру: ";
 	cin >> money;
 	ofstream record("card.txt");
-	int new_money = card.GetBalance() + money;
+	double new_money = card.GetBalance() + money;
 
 	if (record) {
 		record << card.GetNumber() << endl;
@@ -114,7 +114,7 @@ void GetMoney::MoneyIn(Card& card) {
 
 // оплата с карточки на счёт за услуги
 void Payement::Pay(Card& card, Bank& bank) {
-	int money;
+	double money;
 	bank.CopyAccount();
 	ofstream record("ac.txt");
 	cout << "\tВведите пин-код: ";
@@ -139,7 +139,7 @@ void Payement::Pay(Card& card, Bank& bank) {
 						ofstream record_("card.txt");
 						ifstream read("newac.txt");
 						
-						int new_money = card.GetBalance() - money;
+						double new_money = card.GetBalance() - money;
 
 						if (record_) {
 							record_ << card.GetNumber() << endl;
@@ -148,6 +148,8 @@ void Payement::Pay(Card& card, Bank& bank) {
 							record_ << card.GetCardPin() << endl;
 							record_ << card.GetCardCvv() << endl;
 							record_ << new_money << endl;
+							card.SetBalance(new_money);
+							ToFileFrom(card, money);
 						}
 
 						if (read) {
