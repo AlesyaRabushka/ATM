@@ -13,9 +13,9 @@ void MenuOperations::Print() {
 		cout << "\t2 - Выдача наличных" << endl;
 		cout << "\t3 - Валютные операции" << endl;
 		cout << "\t4 - Смена пин-кода" << endl;
-		cout << "\t5 - Добавить на карточку" << endl;
-		cout << "\t6 - Перевести на счет в банке" << endl;
-		cout << "\t7 - Показать инфу про счёт" << endl;
+		cout << "\t5 - Добавить средства на карточку" << endl;
+		cout << "\t6 - Перевести средства на счет в банке" << endl;
+		cout << "\t7 - Данные банковского счета" << endl;
 		cout << "\t8 - Предоставить выписку" << endl;
 		cout << "\t0 - Забрать карту и закончить работу" << endl;
 		int k;
@@ -51,7 +51,7 @@ void MenuOperations::Print() {
 					break;
 				}
 				case 2: {
-					int i = Choice();
+					double i = Choice();
 					if (i != 0) {
 						Currency::MoneyOut(card, i);
 					}
@@ -103,7 +103,7 @@ void MenuOperations::Print() {
 			CardSessions::PauseF();
 			system("cls");
 			cout << endl << endl << endl << endl << endl << endl << endl;
-			cout << "\t\t\t\t\t Спасибо, что воспользовались нашим банкоматом!" << endl;
+			cout << "\t\t\t\t Спасибо, что воспользовались нашим банкоматом!" << endl;
 			cout << endl << endl << endl << endl << endl << endl << endl;
 			exit(0);
 		}
