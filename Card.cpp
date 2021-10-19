@@ -9,7 +9,7 @@ Card::Card() {
 	string card_data = "no";
 	int card_pin = 0;
 	int card_cvv = 0;
-	int card_balance;
+	double card_balance;
 	string empty;
 
 	ifstream from_card("card.txt");
