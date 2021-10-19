@@ -47,12 +47,14 @@ bool MainScreen::CheckPin() {
 			flag = 0;
 			if (i - 1 == 0) break;
 			else {
-				cout << "\tНеверный пин-код! Попробуйте ещё раз! Осталось попыток: " << i - 1 << endl;
+				system("cls");
+				cout << endl << endl << "\t\t\tНеверный пин-код! Попробуйте ещё раз! Осталось попыток: " << i - 1 << endl;
 			}
 		}
 	}
 	if (flag == 0) {
-		cout << "\tНеверный пин-код. Попробуйте позже!" << endl;
+		system("cls");
+		cout << endl << endl << endl << endl << endl << endl << endl << endl << "\t\t\t\t\tНеверный пин-код. Попробуйте позже!" << endl;
 		next = false;
 	}
 	cout << endl;
