@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <string>
 #include "Statement.h"
+#include "Exception.h"
 
 using namespace std;
 
@@ -132,7 +133,7 @@ void Payement::Pay(Card& card, Bank& bank) {
 				try {
 
 					if (money < 0) {
-						throw "\tОперация не может быть выполнена! Попробуйте ещё раз позже.";
+						throw Exception("Неверный формат ввода", "Оплата услуг");
 					}
 					else {
 						card.CopyData();
@@ -193,8 +194,8 @@ void Payement::Pay(Card& card, Bank& bank) {
 						read.close();
 					}
 				}
-				catch (const char* exception) {
-					cerr << exception << endl;
+				catch (Exception& exception) {
+					cerr << exception.what() << endl;
 					ofstream record("card.txt");
 					if (record) {
 						record << card.GetNumber() << endl;
@@ -231,14 +232,14 @@ void ChangePin::ChangeCardPin(Card& card, int old) {
 			cout << "\tВведите новый пин-код: ";
 			try {
 				cin >> new_pin;
-				if (new_pin >= 10000) {
-					throw "\tОтклонено! Пин-код не соответствует установленным требованиям. Попробуйте ещё раз позже!";
+				if (new_pin > 9999) {
+					throw Exception("Неверный ввод пин-код", "Смена пин-код");
 				}
 				card.SetCardPin(new_pin);
 				cout << "\tОперация выполнена успешно!" << endl;
 			}
-			catch (const char* exception) {
-				cerr << exception << endl;
+			catch (Exception& exception) {
+				cerr << exception.what() << endl;
 			}
 
 			if (read) {
@@ -270,3 +271,4 @@ void ChangePin::ChangeCardPin(Card& card, int old) {
 	}
 	cout << endl;
 }
+
