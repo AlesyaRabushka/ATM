@@ -28,12 +28,12 @@ bool MainScreen::CheckPin() {
 		cout << endl << endl;
 
 		try {
-			if (new_pin >= 10000) {
-				throw "\tОтклонено! Пин-код не соответствует установленным требованиям. Попробуйте ещё раз позже!";
+			if (new_pin > 9999) {
+				throw Exception("Недопустимый ввод пин-код", "Ввод пин-код");
 			}
 		}
-		catch (const char* exception) {
-			cerr << exception << endl;
+		catch (Exception& exception) {
+			cerr << exception.what() << endl;
 		}
 
 		if (old == new_pin) {
