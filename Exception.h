@@ -24,13 +24,13 @@ public:
 
 		ofstream record("log.txt", ios::app);
 		if (record) {
-			record << endl << error_type << endl;
-			record << "Äàòà: ";
+			record << "Error: " << error_type << endl;
+			record << "Дата: ";
 			if (t->tm_mday < 10) record << "0" << t->tm_mday << ".";
 			else record << t->tm_mday << ".";
 			record << 1 + t->tm_mon << "." << 1900 + t->tm_year << endl;
 
-			record << "Âðåìÿ: ";
+			record << "Время: ";
 			if (t->tm_hour < 10) record << "0" << t->tm_hour << ":";
 			else record << t->tm_hour << ":";
 			if (t->tm_min < 10) record << "0" << t->tm_min << ":";
@@ -38,7 +38,7 @@ public:
 			if (t->tm_sec < 10) record << "0" << t->tm_sec << endl;
 			else record << t->tm_sec << endl;
 
-			record << "Error type: " << error_str << endl;
+			record << "Error type: " << error_str << endl << endl;
 		}
 		record.close();
 
