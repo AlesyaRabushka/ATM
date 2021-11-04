@@ -19,7 +19,7 @@ void CardSessions::PauseF() {
 }
 
 // снять деньги с карточки
-void GiveMoney::MoneyOut(Card& card) {
+void GiveMoney::MoneyOut(Card& card, Singleton* log) {
 	double money;
 	card.CopyData();
 	ofstream record_("card.txt");
@@ -29,7 +29,8 @@ void GiveMoney::MoneyOut(Card& card) {
 	cin >> money;
 	try {
 		if (money > card.GetBalance() || money < 0) {
-			throw "\tОперация не может быть выполнена! Попробуйте ещё раз позже.";
+			log->SingletonOperation("Выдача наличных", 0);
+			throw Exception("Некорректно введенные данные", "Выдача наличных");
 		}
 		else {
 
@@ -45,7 +46,7 @@ void GiveMoney::MoneyOut(Card& card) {
 				card.SetBalance(new_money);
 			}
 
-			
+			log->SingletonOperation("Выдача наличных", 1);
 			PauseF();
 			cout << endl << "\tЗаберите ваши деньги!" << endl;
 			PauseF();
@@ -55,9 +56,27 @@ void GiveMoney::MoneyOut(Card& card) {
 			cin >> k;
 			switch (k) {
 			case 1: {
-				cout << "\tЗаберите ваш чек!" << endl;
+				log->SingletonOperation("Выдача чека", 1);
+				time_t now = time(0);
+				tm* t = new tm;
+				localtime_s(t, &now);
+
+				cout << "\tЗаберите ваш чек!" << endl << endl;
 				cout << "\t--------------------" << endl;
 				cout << "\tКод операции: 002" << endl;
+				cout << "\tДата: ";
+				if (t->tm_mday < 10) cout << "0" << t->tm_mday << ".";
+				else cout << t->tm_mday << ".";
+				cout << 1 + t->tm_mon << "." << 1900 + t->tm_year << endl;
+
+				cout << "\tВремя: ";
+				if (t->tm_hour < 10) cout << "0" << t->tm_hour << ":";
+				else cout << t->tm_hour << ":";
+				if (t->tm_min < 10) cout << "0" << t->tm_min << ":";
+				else cout << t->tm_min << ":";
+				if (t->tm_sec < 10) cout << "0" << t->tm_sec << endl;
+				else cout << t->tm_sec << endl;
+				
 				cout << "\tСумма выдачи: " << money << endl;
 				cout << "\t--------------------" << endl;
 				PauseF();
@@ -71,8 +90,8 @@ void GiveMoney::MoneyOut(Card& card) {
 			}
 		}
 	}
-	catch (const char* exception) {
-		cerr << exception << endl << endl;
+	catch (Exception& exception) {
+		cerr << exception.what() << endl << endl;
 		ofstream record("card.txt");
 		if (record) {
 			record << card.GetNumber() << endl;
@@ -90,7 +109,7 @@ void GiveMoney::MoneyOut(Card& card) {
 }
 
 // положить деньги на карточку
-void GetMoney::MoneyIn(Card& card) {
+void GetMoney::MoneyIn(Card& card, Singleton* log) {
 	double money;
 	cout << "\tВставьте купюру: ";
 	cin >> money;
@@ -111,6 +130,7 @@ void GetMoney::MoneyIn(Card& card) {
 	cout << "\tОдобрено! Операция выполнена успешно!" << endl;
 	record.close();
 	ToFileIn(card, money);
+	log->SingletonOperation("Перевод средств на карточку", 1);
 }
 
 // оплата с карточки на счёт за услуги
@@ -174,9 +194,26 @@ void Payement::Pay(Card& card, Bank& bank) {
 								cin >> k;
 								switch (k) {
 								case 1: {
+									time_t now = time(0);
+									tm* t = new tm;
+									localtime_s(t, &now);
+
 									cout << "\tЗаберите ваш чек!" << endl << endl;
 									cout << "\t--------------------" << endl;
 									cout << "\tКод операции: 001" << endl;
+									cout << "Дата: ";
+									if (t->tm_mday < 10) cout << "0" << t->tm_mday << ".";
+									else cout << t->tm_mday << ".";
+									cout << 1 + t->tm_mon << "." << 1900 + t->tm_year << endl;
+
+									cout << "Время: ";
+									if (t->tm_hour < 10) cout << "0" << t->tm_hour << ":";
+									else cout << t->tm_hour << ":";
+									if (t->tm_min < 10) cout << "0" << t->tm_min << ":";
+									else cout << t->tm_min << ":";
+									if (t->tm_sec < 10) cout << "0" << t->tm_sec << endl;
+									else cout << t->tm_sec << endl;
+
 									cout << "\tСчет получателя: " << acc_number << endl;
 									cout << "\tСумма перевода: " << money << endl;
 									cout << "\t--------------------" << endl;
@@ -216,7 +253,7 @@ void Payement::Pay(Card& card, Bank& bank) {
 }
 
 // сменить пароль на карточке
-void ChangePin::ChangeCardPin(Card& card, int old) {
+void ChangePin::ChangeCardPin(Card& card, int old, Singleton* log) {
 	bool flag;
 	for (int i = 3; i >= 1; i--)
 	{
@@ -255,6 +292,7 @@ void ChangePin::ChangeCardPin(Card& card, int old) {
 			read.close();
 			record.close();
 			remove("newcard.txt");
+			log->SingletonOperation("Смена пин-код", 1);
 			break;
 		}
 
@@ -262,13 +300,14 @@ void ChangePin::ChangeCardPin(Card& card, int old) {
 			flag = 0;
 			if (i - 1 == 0) break;
 			else {
+				log->SingletonOperation("Попытка смены пин-код", 0);
 				cout << "\tНеверный пин-код! Попробуйте ещё раз! Осталось попыток: " << i - 1 << endl;
 			}
 		}
 	}
 	if (flag == 0) {
+		log->SingletonOperation("Смена пин-код", 0);
 		cout << "\tНеверный пин-код. Попробуйте позже!" << endl;
 	}
 	cout << endl;
 }
-
