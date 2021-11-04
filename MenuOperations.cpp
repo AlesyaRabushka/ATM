@@ -1,11 +1,13 @@
 #include <iostream>
 #include "MenuOperations.h"
 #include "CardSessions.h"
+#include "Joke.h"
+#include "Singleton.h"
 
 using namespace std;
 
 // метод всей проги
-void MenuOperations::Print() {
+void MenuOperations::Print(Singleton* log) {
 
 	while (true) {
 		cout << "\tВыберите операцию:" << endl;
@@ -17,6 +19,7 @@ void MenuOperations::Print() {
 		cout << "\t6 - Перевести средства на счет в банке" << endl;
 		cout << "\t7 - Данные банковского счета" << endl;
 		cout << "\t8 - Предоставить выписку" << endl;
+		cout << "\t9 - Шутка дня" << endl;
 		cout << "\t0 - Забрать карту и закончить работу" << endl;
 		int k;
 		cin >> k;
@@ -26,13 +29,13 @@ void MenuOperations::Print() {
 		switch (k) {
 		case 1: {
 			system("cls");
-			card.Print();
+			card.Print(log);
 			cout << endl;
 			break;
 		}
 		case 2: {
 			system("cls");
-			GiveMoney::MoneyOut(card);
+			GiveMoney::MoneyOut(card, log);
 			break;
 		}
 		case 3: {
@@ -47,13 +50,13 @@ void MenuOperations::Print() {
 				switch (a)
 				{
 				case 1: {
-					Currency::Print();
+					Currency::Print(log);
 					break;
 				}
 				case 2: {
 					double i = Choice();
 					if (i != 0) {
-						Currency::MoneyOut(card, i);
+						Currency::MoneyOut(card, i, log);
 					}
 					break;
 				}
@@ -70,12 +73,12 @@ void MenuOperations::Print() {
 		}
 		case 4: {
 			system("cls");
-			ChangePin::ChangeCardPin(card, card.GetCardPin());
+			ChangePin::ChangeCardPin(card, card.GetCardPin(), log);
 			break;
 		}
 		case 5: {
 			system("cls");
-			GetMoney::MoneyIn(card);
+			GetMoney::MoneyIn(card, log);
 			cout << endl;
 			break;
 		}
@@ -86,20 +89,25 @@ void MenuOperations::Print() {
 		}
 		case 7: {
 			system("cls");
-			bank.Print();
+			bank.Print(log);
 			cout << endl;
 			break;
 		}
 		case 8: {
 			system("cls");
 			cout << "\t\t Выписка: " << endl;
-			Statement::Print();
+			Statement::Print(log);
+			break;
+		}
+		case 9: {
+			Joke::JokeOfTheDay();
 			break;
 		}
 		case 0: {
 			system("cls");
 			cout << endl << endl << endl << endl << endl << endl << endl;
 			cout << "\t\t\t\t\t Заберите вашу карту!" << endl;
+			log->SingletonOperation("Завершение сессии", 1);
 			CardSessions::PauseF();
 			system("cls");
 			cout << endl << endl << endl << endl << endl << endl << endl;
