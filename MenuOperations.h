@@ -14,5 +14,5 @@ class MenuOperations: virtual public Card, virtual public Bank, public GiveMoney
 
 public:
 	//основное меню программы
-	void Print();
+	void Print(Singleton*);
 }; 
