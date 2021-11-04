@@ -33,7 +33,7 @@ Card::Card() {
 }
 
 // вывод данных о карточке
-void Card::Print(){
+void Card::Print(Singleton* log){
 	cout << "\t-------------------------" << endl;
 	cout << "\t     Данные карты: " << endl;
 	cout << "\t-------------------------" << endl;
@@ -41,4 +41,5 @@ void Card::Print(){
 	cout << "\tВладелец карточки: " << GetHolder() << endl;
 	cout << "\tСрок эксплутации: " << GetCardData() << endl;
 	cout << "\tДоступные средства: " << GetBalance() << endl;
+	log->SingletonOperation("Данные банковской карточки", 1);
 }
