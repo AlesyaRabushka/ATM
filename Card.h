@@ -13,5 +13,5 @@ public:
 	//конструктор --- ввод данных из файлика
 	Card();
 	// вывод на экран
-	void Print() override;
+	void Print(Singleton*) override;
 };
