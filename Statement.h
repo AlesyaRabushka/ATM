@@ -13,6 +13,8 @@ public:
 	static void ToFileFrom(Card&, double);
 	static void ToFileIn(Bank&, double);
 
-	static void Print();
+	static void Print(Singleton*);
 };
+
+
 
