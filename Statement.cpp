@@ -20,6 +20,7 @@ void Statement::ToFileIn(Card& card, double money) {
 	if (record) {
 		record << "\t--------------------------------" << endl;
 		record << "\tПополнение средств:" << endl;
+
 		record << "\tДата: ";
 		if (t->tm_mday < 10) record << "0" << t->tm_mday << ".";
 		else record << t->tm_mday << ".";
@@ -107,7 +108,7 @@ void Statement::ToFileIn(Bank& bank, double money) {
 }
 
 // вывод выписки
-void Statement::Print() {
+void Statement::Print(Singleton* log) {
 	ifstream read("statement.txt");
 
 	if (read) {
@@ -119,5 +120,6 @@ void Statement::Print() {
 	}
 
 	read.close();
+	log->SingletonOperation("Предоставление выписки", 1);
 }
 
