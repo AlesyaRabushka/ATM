@@ -13,6 +13,7 @@ public:
 	MainScreen();
 	MainScreen(Singleton*);
 
+	bool CheckStr(char*, int);
 
 	// проверка пин-кода при входе в банкомат
     bool CheckPin(Singleton*);
