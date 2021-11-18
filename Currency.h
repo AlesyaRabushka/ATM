@@ -8,18 +8,21 @@ using namespace std;
 
 // CHANGE CURRENCY CLASS
 
-class Currency: public GiveMoney, public virtual Bankomat {
+class Currency: public GiveMoney, public virtual Bank {
 private:
 	double kazah = 174, kvacha = 7, kirgiz = 35, ukrain = 11, myanma = 777;
-	string kazah_t = ".00 (РєР°Р·Р°С…СЃС‚Р°РЅСЃРєРёР№ С‚РµРЅРіРµ)", kvacha_t = ".00 (Р·Р°РјР±РёР№СЃРєР°СЏ РєРІР°С‡Р°)", kirgiz_t = ".00 (РєРёСЂРіРёР·СЃРєР°СЏ СЃРѕРјР°)", ukrain_t = ".00 (СѓРєСЂР°РёРЅСЃРєР°СЏ РіСЂРёРІРЅР°)", myanma_t = ".00 (РјСЊСЏРЅРјР°РЅСЃРєРёР№ РєСЊСЏС‚)";
+	string kazah_t = ".00 (казахстанский тенге)", kvacha_t = ".00 (замбийская квача)", kirgiz_t = ".00 (киргизская сома)", ukrain_t = ".00 (украинская гривна)", myanma_t = ".00 (мьянманский кьят)";
 
 public:
-	// РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
-	void Print(Singleton*);
-	// РґР»СЏ РїРµСЂРµРјРµРЅС‹ РЅР° РєР°СЂС‚РѕС‡РєРµ
-	void MoneyOut(Card&, double, Singleton*);
-	//РІС‹Р±РѕСЂ РІР°Р»СЋС‚С‹
-	double Choice();
+	static double GetKaz() {
+		return 174;
+	}
+	// вывод на экран
+	static void Print(Singleton*);
+	// для перемены на карточке
+	static void MoneyOut(Card&, double, Singleton*);
+	//выбор валюты
+	static double Choice();
 
-	void ToFileFrom(Card&, double);
+	static void ToFileFrom(Card&, double);
 };

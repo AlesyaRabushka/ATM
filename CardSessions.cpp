@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// РїР°СѓР·Р°
+// пауза
 void CardSessions::PauseF() {
 	cout << "\t. ";
 	Sleep(1000);
@@ -18,25 +18,25 @@ void CardSessions::PauseF() {
 	cout << endl;
 }
 
-// СЃРЅСЏС‚СЊ РґРµРЅСЊРіРё СЃ РєР°СЂС‚РѕС‡РєРё
+// снять деньги с карточки
 void GiveMoney::MoneyOut(Card& card, Singleton* log) {
 	double money;
 	card.CopyData();
-	ofstream record_("card.txt");
+	//ofstream record_("card.txt");
 
 	
-	cout << "\tР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РІС‹РґР°С‡Рё: ";
+	cout << "\tВведите сумму выдачи: ";
 	cin >> money;
 	try {
 		if (money > card.GetBalance() || money < 0) {
-			log->SingletonOperation("Р’С‹РґР°С‡Р° РЅР°Р»РёС‡РЅС‹С…", 0);
-			throw Exception("РќРµРєРѕСЂСЂРµРєС‚РЅРѕ РІРІРµРґРµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ", "Р’С‹РґР°С‡Р° РЅР°Р»РёС‡РЅС‹С…");
+			log->SingletonOperation("Выдача наличных", 0);
+			throw Exception("Некорректно введенные данные", "Выдача наличных");
 		}
 		else {
 
 			double new_money = card.GetBalance() - money;
 
-			if (record_) {
+			/*if (record_) {
 				record_ << card.GetNumber() << endl;
 				record_ << card.GetCardData() << endl;
 				record_ << card.GetHolder() << endl;
@@ -44,32 +44,93 @@ void GiveMoney::MoneyOut(Card& card, Singleton* log) {
 				record_ << card.GetCardCvv() << endl;
 				record_ << new_money << endl;
 				card.SetBalance(new_money);
-			}
+			}*/
 
-			log->SingletonOperation("Р’С‹РґР°С‡Р° РЅР°Р»РёС‡РЅС‹С…", 1);
+
+			string card_number = "no";
+			string card_holder = "no";
+			string card_data = "no";
+			int card_pin = 0;
+			int card_cvv = 0;
+			double card_balance;
+			string empty;
+			int k1 = 0, l = card.GetCardChosen() - 1;
+			//cout << l << endl;
+			//cout << l;
+			//system("pause");
+			//cout << chosen << endl;
+			ifstream from_card("newcard.txt");
+			ofstream record_("card.txt");
+
+
+			if (from_card) {
+				if (record_) {
+					from_card >> k1;
+					record_ << k1 << endl;
+					getline(from_card, empty);
+					//cout << k1 << endl;
+					for (int i = 0; i < k1; i++) {
+						if (i == l) {
+
+							record_ << card.GetNumber() << endl;
+							record_ << card.GetCardData() << endl;
+							record_ << card.GetHolder() << endl;
+							record_ << card.GetCardPin() << endl;
+							record_ << card.GetCardCvv() << endl;
+							card.SetBalance(new_money);
+							record_ << new_money << endl;
+							//break;
+						}
+						else {
+							getline(from_card, card_number);
+							getline(from_card, card_data);
+							getline(from_card, card_holder);
+							from_card >> card_pin;
+							getline(from_card, empty);
+							from_card >> card_cvv;
+							getline(from_card, empty);
+							from_card >> card_balance;
+							getline(from_card, empty);
+
+
+							record_ << card_number << endl;
+							record_ << card_data << endl;
+							record_ << card_holder << endl;
+							record_ << card_pin << endl;
+							record_ << card_cvv << endl;
+							record_ << card_balance << endl;
+						}
+					}
+				}
+			}
+			from_card.close();
+			record_.close();
+
+
+			log->SingletonOperation("Выдача наличных", 1);
 			PauseF();
-			cout << endl << "\tР—Р°Р±РµСЂРёС‚Рµ РІР°С€Рё РґРµРЅСЊРіРё!" << endl;
+			cout << endl << "\tЗаберите ваши деньги!" << endl;
 			PauseF();
-			cout << endl << "\tР–РµР»Р°РµС‚Рµ Р·Р°Р±СЂР°С‚СЊ С‡РµРє? " << endl;
-			cout << "\t1 - Р”Р°" << endl << "\t2 - РќРµС‚" << endl;
+			cout << endl << "\tЖелаете забрать чек? " << endl;
+			cout << "\t1 - Да" << endl << "\t2 - Нет" << endl;
 			int k;
 			cin >> k;
 			switch (k) {
 			case 1: {
-				log->SingletonOperation("Р’С‹РґР°С‡Р° С‡РµРєР°", 1);
+				log->SingletonOperation("Выдача чека", 1);
 				time_t now = time(0);
 				tm* t = new tm;
 				localtime_s(t, &now);
 
-				cout << "\tР—Р°Р±РµСЂРёС‚Рµ РІР°С€ С‡РµРє!" << endl << endl;
+				cout << "\tЗаберите ваш чек!" << endl << endl;
 				cout << "\t--------------------" << endl;
-				cout << "\tРљРѕРґ РѕРїРµСЂР°С†РёРё: 002" << endl;
-				cout << "\tР”Р°С‚Р°: ";
+				cout << "\tКод операции: 002" << endl;
+				cout << "\tДата: ";
 				if (t->tm_mday < 10) cout << "0" << t->tm_mday << ".";
 				else cout << t->tm_mday << ".";
 				cout << 1 + t->tm_mon << "." << 1900 + t->tm_year << endl;
 
-				cout << "\tР’СЂРµРјСЏ: ";
+				cout << "\tВремя: ";
 				if (t->tm_hour < 10) cout << "0" << t->tm_hour << ":";
 				else cout << t->tm_hour << ":";
 				if (t->tm_min < 10) cout << "0" << t->tm_min << ":";
@@ -77,7 +138,7 @@ void GiveMoney::MoneyOut(Card& card, Singleton* log) {
 				if (t->tm_sec < 10) cout << "0" << t->tm_sec << endl;
 				else cout << t->tm_sec << endl;
 				
-				cout << "\tРЎСѓРјРјР° РІС‹РґР°С‡Рё: " << money << endl;
+				cout << "\tСумма выдачи: " << money << endl;
 				cout << "\t--------------------" << endl;
 				PauseF();
 				cout << endl;
@@ -101,22 +162,23 @@ void GiveMoney::MoneyOut(Card& card, Singleton* log) {
 			record << card.GetCardCvv() << endl;
 			record << card.GetBalance() << endl;
 		}
+		record.close();
 	}
 
 	ToFileFrom(card, money);
-	record_.close();
+	
 	//remove("newcard.txt");
 }
 
-// РїРѕР»РѕР¶РёС‚СЊ РґРµРЅСЊРіРё РЅР° РєР°СЂС‚РѕС‡РєСѓ
+// положить деньги на карточку
 void GetMoney::MoneyIn(Card& card, Singleton* log) {
 	double money;
-	cout << "\tР’СЃС‚Р°РІСЊС‚Рµ РєСѓРїСЋСЂСѓ: ";
+	cout << "\tВставьте купюру: ";
 	cin >> money;
-	ofstream record("card.txt");
+	//ofstream record("card.txt");
 	double new_money = card.GetBalance() + money;
 
-	if (record) {
+	/*if (record) {
 		record << card.GetNumber() << endl;
 		record << card.GetCardData() << endl;
 		record << card.GetHolder() << endl;
@@ -124,21 +186,84 @@ void GetMoney::MoneyIn(Card& card, Singleton* log) {
 		record << card.GetCardCvv() << endl;
 		record << new_money << endl;
 		card.SetBalance(new_money);
+	}*/
+
+
+
+	string card_number = "no";
+	string card_holder = "no";
+	string card_data = "no";
+	int card_pin = 0;
+	int card_cvv = 0;
+	double card_balance;
+	string empty;
+	int k1 = 0, l = card.GetCardChosen() - 1;
+	//cout << l << endl;
+	//cout << l;
+	//system("pause");
+	//cout << chosen << endl;
+	ifstream from_card("newcard.txt");
+	ofstream record_("card.txt");
+
+
+	if (from_card) {
+		if (record_) {
+			from_card >> k1;
+			record_ << k1 << endl;
+			getline(from_card, empty);
+			//cout << k1 << endl;
+			for (int i = 0; i < k1; i++) {
+				if (i == l) {
+
+					record_ << card.GetNumber() << endl;
+					record_ << card.GetCardData() << endl;
+					record_ << card.GetHolder() << endl;
+					record_ << card.GetCardPin() << endl;
+					record_ << card.GetCardCvv() << endl;
+					card.SetBalance(new_money);
+					record_ << new_money << endl;
+					//break;
+				}
+				else {
+					getline(from_card, card_number);
+					getline(from_card, card_data);
+					getline(from_card, card_holder);
+					from_card >> card_pin;
+					getline(from_card, empty);
+					from_card >> card_cvv;
+					getline(from_card, empty);
+					from_card >> card_balance;
+					getline(from_card, empty);
+
+
+					record_ << card_number << endl;
+					record_ << card_data << endl;
+					record_ << card_holder << endl;
+					record_ << card_pin << endl;
+					record_ << card_cvv << endl;
+					record_ << card_balance << endl;
+				}
+			}
+		}
 	}
+	from_card.close();
+	record_.close();
+
 	cout << endl;
 	PauseF();
-	cout << "\tРћРґРѕР±СЂРµРЅРѕ! РћРїРµСЂР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР° СѓСЃРїРµС€РЅРѕ!" << endl;
-	record.close();
+	cout << "\tОдобрено! Операция выполнена успешно!" << endl;
+	//record.close();
 	ToFileIn(card, money);
-	log->SingletonOperation("РџРµСЂРµРІРѕРґ СЃСЂРµРґСЃС‚РІ РЅР° РєР°СЂС‚РѕС‡РєСѓ", 1);
+	log->SingletonOperation("Перевод средств на карточку", 1);
 }
 
-// РѕРїР»Р°С‚Р° СЃ РєР°СЂС‚РѕС‡РєРё РЅР° СЃС‡С‘С‚ Р·Р° СѓСЃР»СѓРіРё
-void Payement::Pay(Card& card, Bank& bank) {
+// оплата с карточки на счёт за услуги
+void Payement::Pay(Card& card, Bankomat& bank) {
 	double money;
 	bank.CopyAccount();
+	card.CopyData();
 	ofstream record("ac.txt");
-	cout << "\tР’РІРµРґРёС‚Рµ РїРёРЅ-РєРѕРґ: ";
+	cout << "\tВведите пин-код: ";
 	int pin;
 	cin >> pin;
 	for (int i = 3; i >= 1; i--) {
@@ -148,12 +273,12 @@ void Payement::Pay(Card& card, Bank& bank) {
 				cout << pin << endl;
 			}
 			else if(pin == card.GetCardPin()) {
-				cout << "\tР’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґР°: ";
+				cout << "\tВведите сумму перевода: ";
 				cin >> money;
 				try {
 
 					if (money < 0) {
-						throw Exception("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ РІРІРѕРґР°", "РћРїР»Р°С‚Р° СѓСЃР»СѓРі");
+						throw Exception("Неверный формат ввода", "Оплата услуг");
 					}
 					else {
 						card.CopyData();
@@ -162,7 +287,7 @@ void Payement::Pay(Card& card, Bank& bank) {
 						
 						double new_money = card.GetBalance() - money;
 
-						if (record_) {
+						/*if (record_) {
 							record_ << card.GetNumber() << endl;
 							record_ << card.GetCardData() << endl;
 							record_ << card.GetHolder() << endl;
@@ -171,7 +296,67 @@ void Payement::Pay(Card& card, Bank& bank) {
 							record_ << new_money << endl;
 							card.SetBalance(new_money);
 							ToFileFrom(card, money);
+						}*/
+
+
+						string card_number = "no";
+						string card_holder = "no";
+						string card_data = "no";
+						int card_pin = 0;
+						int card_cvv = 0;
+						double card_balance;
+						string empty;
+						int k1 = 0, l = card.GetCardChosen() - 1;
+						//cout << l << endl;
+						//cout << l;
+						//system("pause");
+						//cout << chosen << endl;
+						ifstream from_card("newcard.txt");
+						ofstream record_1("card.txt");
+
+
+						if (from_card) {
+							if (record_1) {
+								from_card >> k1;
+								record_1 << k1 << endl;
+								getline(from_card, empty);
+								//cout << k1 << endl;
+								for (int i = 0; i < k1; i++) {
+									if (i == l) {
+
+										record_1 << card.GetNumber() << endl;
+										record_1 << card.GetCardData() << endl;
+										record_1 << card.GetHolder() << endl;
+										record_1 << card.GetCardPin() << endl;
+										record_1 << card.GetCardCvv() << endl;
+										card.SetBalance(new_money);
+										record_1 << new_money << endl;
+										//break;
+									}
+									else {
+										getline(from_card, card_number);
+										getline(from_card, card_data);
+										getline(from_card, card_holder);
+										from_card >> card_pin;
+										getline(from_card, empty);
+										from_card >> card_cvv;
+										getline(from_card, empty);
+										from_card >> card_balance;
+										getline(from_card, empty);
+
+
+										record_1 << card_number << endl;
+										record_1 << card_data << endl;
+										record_1 << card_holder << endl;
+										record_1 << card_pin << endl;
+										record_1 << card_cvv << endl;
+										record_1 << card_balance << endl;
+									}
+								}
+							}
 						}
+						from_card.close();
+						record_1.close();
 
 						if (read) {
 							if (record) {
@@ -188,8 +373,8 @@ void Payement::Pay(Card& card, Bank& bank) {
 								
 
 								PauseF();
-								cout << endl << "\tР–РµР»Р°РµС‚Рµ Р·Р°Р±СЂР°С‚СЊ С‡РµРє? " << endl;
-								cout << "\t1 - Р”Р°" << endl << "\t2 - РќРµС‚" << endl;
+								cout << endl << "\tЖелаете забрать чек? " << endl;
+								cout << "\t1 - Да" << endl << "\t2 - Нет" << endl;
 								int k;
 								cin >> k;
 								switch (k) {
@@ -198,15 +383,15 @@ void Payement::Pay(Card& card, Bank& bank) {
 									tm* t = new tm;
 									localtime_s(t, &now);
 
-									cout << "\tР—Р°Р±РµСЂРёС‚Рµ РІР°С€ С‡РµРє!" << endl << endl;
+									cout << "\tЗаберите ваш чек!" << endl << endl;
 									cout << "\t--------------------" << endl;
-									cout << "\tРљРѕРґ РѕРїРµСЂР°С†РёРё: 001" << endl;
-									cout << "Р”Р°С‚Р°: ";
+									cout << "\tКод операции: 001" << endl;
+									cout << "Дата: ";
 									if (t->tm_mday < 10) cout << "0" << t->tm_mday << ".";
 									else cout << t->tm_mday << ".";
 									cout << 1 + t->tm_mon << "." << 1900 + t->tm_year << endl;
 
-									cout << "Р’СЂРµРјСЏ: ";
+									cout << "Время: ";
 									if (t->tm_hour < 10) cout << "0" << t->tm_hour << ":";
 									else cout << t->tm_hour << ":";
 									if (t->tm_min < 10) cout << "0" << t->tm_min << ":";
@@ -214,8 +399,8 @@ void Payement::Pay(Card& card, Bank& bank) {
 									if (t->tm_sec < 10) cout << "0" << t->tm_sec << endl;
 									else cout << t->tm_sec << endl;
 
-									cout << "\tРЎС‡РµС‚ РїРѕР»СѓС‡Р°С‚РµР»СЏ: " << acc_number << endl;
-									cout << "\tРЎСѓРјРјР° РїРµСЂРµРІРѕРґР°: " << money << endl;
+									cout << "\tСчет получателя: " << acc_number << endl;
+									cout << "\tСумма перевода: " << money << endl;
 									cout << "\t--------------------" << endl;
 									PauseF();
 									cout << endl;
@@ -252,34 +437,34 @@ void Payement::Pay(Card& card, Bank& bank) {
 	//system("cls");
 }
 
-// СЃРјРµРЅРёС‚СЊ РїР°СЂРѕР»СЊ РЅР° РєР°СЂС‚РѕС‡РєРµ
+// сменить пароль на карточке
 void ChangePin::ChangeCardPin(Card& card, int old, Singleton* log) {
 	bool flag;
 	for (int i = 3; i >= 1; i--)
 	{
-		cout << "\tР’РІРµРґРёС‚Рµ СЃС‚Р°СЂС‹Р№ РїРёРЅ-РєРѕРґ: ";
+		cout << "\tВведите старый пин-код: ";
 		int old_pin, new_pin;
 		cin >> old_pin;
 
 		if (old == old_pin) {
 			flag = true;
 			card.CopyData();
-			ifstream read("newcard.txt");
-			ofstream record("card.txt");
-			cout << "\tР’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РїРёРЅ-РєРѕРґ: ";
+			/*ifstream read("newcard.txt");
+			ofstream record("card.txt");*/
+			cout << "\tВведите новый пин-код: ";
 			try {
 				cin >> new_pin;
 				if (new_pin > 9999) {
-					throw Exception("РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ РїРёРЅ-РєРѕРґ", "РЎРјРµРЅР° РїРёРЅ-РєРѕРґ");
+					throw Exception("Неверный ввод пин-код", "Смена пин-код");
 				}
 				card.SetCardPin(new_pin);
-				cout << "\tРћРїРµСЂР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР° СѓСЃРїРµС€РЅРѕ!" << endl;
+				cout << "\tОперация выполнена успешно!" << endl;
 			}
 			catch (Exception& exception) {
 				cerr << exception.what() << endl;
 			}
 
-			if (read) {
+			/*if (read) {
 				if (record) {
 					record << card.GetNumber() << endl;
 					record << card.GetCardData() << endl;
@@ -291,8 +476,68 @@ void ChangePin::ChangeCardPin(Card& card, int old, Singleton* log) {
 			}
 			read.close();
 			record.close();
-			remove("newcard.txt");
-			log->SingletonOperation("РЎРјРµРЅР° РїРёРЅ-РєРѕРґ", 1);
+			remove("newcard.txt");*/
+
+
+			string card_number = "no";
+			string card_holder = "no";
+			string card_data = "no";
+			int card_pin = 0;
+			int card_cvv = 0;
+			double card_balance;
+			string empty;
+			int k1 = 0, l = card.GetCardChosen() - 1;
+			//cout << l << endl;
+			//cout << l;
+			//system("pause");
+			//cout << chosen << endl;
+			ifstream from_card("newcard.txt");
+			ofstream record_("card.txt");
+
+
+			if (from_card) {
+				if (record_) {
+					from_card >> k1;
+					record_ << k1 << endl;
+					getline(from_card, empty);
+					cout << k1 << endl;
+					for (int i = 0; i < k1; i++) {
+						if (i == l) {
+
+							record_ << card.GetNumber() << endl;
+							record_ << card.GetCardData() << endl;
+							record_ << card.GetHolder() << endl;
+							record_ << card.GetCardPin() << endl;
+							record_ << card.GetCardCvv() << endl;
+							record_ << card.GetBalance() << endl;
+							//break;
+						}
+						else {
+							getline(from_card, card_number);
+							getline(from_card, card_data);
+							getline(from_card, card_holder);
+							from_card >> card_pin;
+							getline(from_card, empty);
+							from_card >> card_cvv;
+							getline(from_card, empty);
+							from_card >> card_balance;
+							getline(from_card, empty);
+
+
+							record_ << card_number << endl;
+							record_ << card_data << endl;
+							record_ << card_holder << endl;
+							record_ << card_pin << endl;
+							record_ << card_cvv << endl;
+							record_ << card_balance << endl;
+						}
+					}
+				}
+			}
+			from_card.close();
+			record_.close();
+
+			log->SingletonOperation("Смена пин-код", 1);
 			break;
 		}
 
@@ -300,14 +545,14 @@ void ChangePin::ChangeCardPin(Card& card, int old, Singleton* log) {
 			flag = 0;
 			if (i - 1 == 0) break;
 			else {
-				log->SingletonOperation("РџРѕРїС‹С‚РєР° СЃРјРµРЅС‹ РїРёРЅ-РєРѕРґ", 0);
-				cout << "\tРќРµРІРµСЂРЅС‹Р№ РїРёРЅ-РєРѕРґ! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·! РћСЃС‚Р°Р»РѕСЃСЊ РїРѕРїС‹С‚РѕРє: " << i - 1 << endl;
+				log->SingletonOperation("Попытка смены пин-код", 0);
+				cout << "\tНеверный пин-код! Попробуйте ещё раз! Осталось попыток: " << i - 1 << endl;
 			}
 		}
 	}
 	if (flag == 0) {
-		log->SingletonOperation("РЎРјРµРЅР° РїРёРЅ-РєРѕРґ", 0);
-		cout << "\tРќРµРІРµСЂРЅС‹Р№ РїРёРЅ-РєРѕРґ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРѕР·Р¶Рµ!" << endl;
+		log->SingletonOperation("Смена пин-код", 0);
+		cout << "\tНеверный пин-код. Попробуйте позже!" << endl;
 	}
 	cout << endl;
 }

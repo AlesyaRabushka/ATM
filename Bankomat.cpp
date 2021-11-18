@@ -1,113 +1,34 @@
+#include <iostream>
 #include "Bankomat.h"
+#include "Card.h"
 #include <fstream>
 #include <string>
-#include "Card.h"
+
 using namespace std;
 
-// ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€
 Bankomat::Bankomat() {
+	string bank_number = "no";
+	string bank_holder = "no";
+	double bank_balance = 0;
 
-	ifstream from_card("card.txt");
-	if (from_card) {
-		getline(from_card, number);
-		getline(from_card, card_data);
-		getline(from_card, holder);
-		from_card >> card_pin;
-		getline(from_card, empty);
-		from_card >> card_cvv;
-		getline(from_card, empty);
-		from_card >> balance;
+	ifstream from_acc("ac.txt");
+	if (from_acc) {
+		getline(from_acc, bank_number);
+		SetNumber(bank_number);
+		getline(from_acc, bank_holder);
+		SetHolder(bank_holder);
+		from_acc >> bank_balance;
+		SetBalance(bank_balance);
 
 	}
-	from_card.close();
+	from_acc.close();
 }
 
-
-//Ð³ÐµÑ‚Ñ‚ÐµÑ€Ñ‹ Ð¸ ÑÐµÑ‚Ñ‚ÐµÑ€Ñ‹
-string Bankomat::GetNumber() {
-	return number;
-}
-string Bankomat::GetHolder() {
-	return holder;
-}
-string Bankomat::GetCardData() {
-	return card_data;
-}
-int Bankomat::GetCardPin() {
-	return card_pin;
-}
-double Bankomat::GetBalance() {
-	return balance;
-}
-int Bankomat::GetCardCvv() {
-	return card_cvv;
-}
-
-void Bankomat::SetNumber(string number) {
-	this->number = number;
-}
-void Bankomat::SetHolder(string holder) {
-	this->holder = holder;
-}
-void Bankomat::SetCardPin(int pin) {
-	this->card_pin = pin;
-}
-void Bankomat::SetCardData(string data) {
-	this->card_data = data;
-}
-void Bankomat::SetBalance(double balance) {
-	this->balance = balance;
-}
-
-// ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐµ
-void Bankomat::CopyData() {
-	ifstream from_card("card.txt");
-	ofstream new_card("newcard.txt");
-
-	if (from_card) {
-		if (new_card) {
-			getline(from_card, number);
-			getline(from_card, card_data);
-			getline(from_card, holder);
-
-			from_card >> card_pin;
-			getline(from_card, empty);
-			from_card >> card_cvv;
-			getline(from_card, empty);
-			from_card >> balance;
-
-			new_card << number << endl;
-			new_card << card_data << endl;
-			new_card << holder << endl;
-
-			new_card << balance << endl;
-			new_card << card_pin << endl;
-			new_card << card_cvv << endl;
-		}
-	}
-	from_card.close();
-	new_card.close();
-}
-
-// ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ ÑÑ‡ÐµÑ‚Ðµ Ð² Ð±Ð°Ð½ÐºÐµ
-void Bankomat::CopyAccount() {
-	ifstream from_account("ac.txt");
-	ofstream new_account("newac.txt");
-
-	if (from_account) {
-		if (new_account) {
-			string ac_num, ac_hol;
-			int na;
-			getline(from_account, ac_num);
-			new_account << ac_num << endl;
-
-			getline(from_account, ac_hol);
-			new_account << ac_hol << endl;
-
-			from_account >> na;
-			new_account << na << endl;
-		}
-	}
-	from_account.close();
-	new_account.close();
+void Bankomat::Print(Singleton* log) {
+	cout << "\t-------------------------------------" << endl;
+	cout << "\t     Äàííûå áàíêîâñêîãî ñ÷åòà: " << endl;
+	cout << "\t-------------------------------------" << endl;
+	cout << "\tÍîìåð ñ÷åòà: " << GetNumber() << endl;
+	cout << "\tÂëàäåëåö ñ÷åòà: " << GetHolder() << endl;
+	cout << "\tÄîñòóïíûå ñðåäñòâà: " << GetBalance() << endl;
 }

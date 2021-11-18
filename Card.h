@@ -2,16 +2,21 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Bankomat.h"
+#include "Bank.h"
 
 using namespace std;
 
 //CARD CLASS
-class Card: virtual public Bankomat{
+class Card : virtual public Bank, public Chosen {
 
 public:
-	//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ --- РІРІРѕРґ РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»РёРєР°
-	Card();
-	// РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
+	//конструктор --- ввод данных из файлика
+	Card() {
+		int s = 0;
+	}
+	Card(int);
+
+	// вывод на экран
 	void Print(Singleton*) override;
+	void Secret(string);
 };

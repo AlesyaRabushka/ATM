@@ -7,14 +7,13 @@
 using namespace std;
 
 // CARD STATEMENT CLASS
-class Statement: public virtual Card, public virtual Bankomat{
+class Statement: public virtual Bank{
 public:
 	static void ToFileIn(Card&, double);
 	static void ToFileFrom(Card&, double);
-	static void ToFileIn(Bank&, double);
+	static void ToFileIn(Bankomat&, double);
 
 	static void Print(Singleton*);
 };
-
 
 

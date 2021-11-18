@@ -9,7 +9,7 @@
 class CardSessions {
 
 public:
-	//РґР»СЏ РІС‹РІРѕРґР° СЃ РїР°СѓР·РѕР№
+	//для вывода с паузой
 	static void PauseF();
 };
 
@@ -21,10 +21,10 @@ public:
 };
 
 // CHANGE CARD PIN CLASS
-class ChangePin : public Bankomat{
+class ChangePin : public Bank{
 public:
-	//СЃРјРµРЅР° РїРёРЅ-РєРѕРґР° РЅР° РєР°СЂС‚РѕС‡РєРµ
-	static void ChangeCardPin(Card&, int, Singleton*);//РЅРµСЃС‚Р°С‚РёС‡РµСЃРєР°СЏ СЃСЃС‹Р»РєР° РЅР° С‡Р»РµРЅ РґРѕР»Р¶РЅР° СѓРєР°Р·С‹РІР°С‚СЊСЃСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ Р·Р°РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, Р° РјС‹ РµРіРѕ РЅРµ СЃРѕР·РґР°С‘Рј)
+	//смена пин-кода на карточке
+	static void ChangeCardPin(Card&, int, Singleton*);//нестатическая ссылка на член должна указываться относительно заданного объекта, а мы его не создаём)
 };
 
 // GET MONEY CLASS (TO CARD)
@@ -36,5 +36,5 @@ public:
 // PAYEMENT (FROM CARD)
 class Payement : public CardSessions, public Statement {
 public:
-	static void Pay(Card&, Bank&);
+	static void Pay(Card&, Bankomat&);
 };

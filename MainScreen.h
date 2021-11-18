@@ -7,14 +7,15 @@
 
 using namespace std;
 
-class MainScreen: public Card, public CardSessions {
+class MainScreen : public Card, public CardSessions, public Chosen {
 public:
-	// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
-	MainScreen();
+	// конструктор
 	MainScreen(Singleton*);
 
 	bool CheckStr(char*, int);
-
-	// РїСЂРѕРІРµСЂРєР° РїРёРЅ-РєРѕРґР° РїСЂРё РІС…РѕРґРµ РІ Р±Р°РЅРєРѕРјР°С‚
-    bool CheckPin(Singleton*);
+	void Operation() {
+		Chosen::Operation();
+	}
+	// проверка пин-кода при входе в банкомат
+	bool CheckPin(Singleton*, int, Card&);
 };

@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <cstdlib>
 #include "Bankomat.h"
 #include "Card.h"
@@ -22,11 +22,19 @@ int main() {
 	Singleton* log = Singleton::instance();
 
 	MainScreen b(log);
+	
+	Chosen ch;
+	ch.Operation();
+	Card card(ch.GetChosen());
+	card.SetCardChosen(ch.GetChosen());
+	//cout << card.GetCardChosen();
+
+	system("pause");
 
 	//если пароль правильный РАБОТАЕМ!
-	if (b.CheckPin(log)) {
-		MenuOperations a;
-		a.Print(log);
+	if (b.CheckPin(log, ch.GetChosen(), card)) {
+		//MenuOperations a;
+		MenuOperations::Print(log, card);
 	}
 
 	//если неправильный - ПОКА ПОКА приходи потом!

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Card.h"
 #include "CardSessions.h"
-#include "Bank.h"
+#include "Bankomat.h"
 #include "Currency.h"
 #include "Statement.h"
 
@@ -10,9 +10,11 @@
 using namespace std;
 
 // MENU OPERATIONS CLASS
-class MenuOperations: virtual public Card, virtual public Bank, public GiveMoney , public GetMoney, public ChangePin, public Currency, public Payement, public Statement{
-
+class MenuOperations: public Statement{
+private:
+	int k;
 public:
-	//РѕСЃРЅРѕРІРЅРѕРµ РјРµРЅСЋ РїСЂРѕРіСЂР°РјРјС‹
-	void Print(Singleton*);
+	//основное меню программы
+	MenuOperations();
+	static void Print(Singleton*, Card&);
 }; 
